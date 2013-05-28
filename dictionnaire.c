@@ -21,7 +21,7 @@ Code creationMot(int i, int taille){
     *mot.valeur=i;
     return mot;
 }
-int ajouterElement (Code prefix, char* mono);
+
 
 Dico initialiser(){
     Dico dico;
@@ -42,4 +42,24 @@ Dico initialiser(){
     }
     dico.finalp = currentp;
     return dico;
+}
+
+int ajouterElement (Code prefix, char* mono){
+    return 0;
+};
+
+int rechercher(Code prefix, char* mono, int *code){
+    return 0;
+}
+
+char *codeVersChaine (Code code, int longueur){
+    return "coco";
+}
+
+Code sequenceVersCode (Code sequence, int longueur){
+    return sequence;
+}
+
+Code fusion (Code prefix, char* mono){
+    return prefix;
 }
