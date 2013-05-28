@@ -52,7 +52,7 @@ int ajouterElement (Code prefix, char* mono);
 /*
  * 0 si pas trouver 1 sinon
  */
-int rechercher(Code mot);
+int rechercher(Code prefix, int *code);
 
 /**
 *
@@ -64,4 +64,10 @@ char *codeVersChaine (Code code, int longueur);
 *
 *
 **/
-char* sequenceVersCode (Code sequence, int longueur);
+Code sequenceVersCode (Code sequence, int longueur);
+
+/**
+*
+*
+**/
+Code fusion (Code w, char a);
