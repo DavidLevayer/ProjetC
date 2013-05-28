@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #endif
 
@@ -46,7 +47,7 @@ Dico initialiser ();
 *ajoute l'élément s'il n'est pas présent ne fait rien sinon... retourne le numero du code que l'on souhaite ajouter
 *
 **/
-int ajouterElement (Code element, char* mono);
+int ajouterElement (Code prefix, char* mono);
 
 /*
  * 0 si pas trouver 1 sinon
