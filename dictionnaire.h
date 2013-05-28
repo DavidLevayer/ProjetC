@@ -52,7 +52,7 @@ int ajouterElement (Code prefix, char* mono);
 /*
  * 0 si pas trouver 1 sinon
  */
-int rechercher(Code prefix, int *code);
+int rechercher(Code prefix, char* mono, int *code);
 
 /**
 *
