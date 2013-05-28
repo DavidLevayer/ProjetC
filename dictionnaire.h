@@ -70,4 +70,4 @@ Code sequenceVersCode (Code sequence, int longueur);
 *
 *
 **/
-Code fusion (Code w, char a);
+Code fusion (Code prefix, char* mono);
