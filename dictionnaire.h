@@ -50,7 +50,7 @@ Dico initialiser ();
 int ajouterElement (Code prefix, char* mono);
 
 /*
- * 0 si pas trouver 1 sinon
+ * 0 si pas trouver 1 sinon modifie int *code pour permettre la recuperation du code et renvoi 1
  */
 int rechercher(Code prefix, char* mono, int *code);
 
