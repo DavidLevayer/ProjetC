@@ -17,10 +17,10 @@
 *
 *
 **/
-int compresser (char *nom, int entreeStandard);
+int compresser (FILE *fi, FILE *fo);
 
 /**
 *
 *
 **/
-int decompresser (char *nom, int entreeStandard);
+int decompresser (FILE *fi, FILE *fo);
