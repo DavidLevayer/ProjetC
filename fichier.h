@@ -17,7 +17,7 @@
 *
 *
 **/
-FILE* ouvrir (char* nomFichier);
+FILE* ouvrir (char* nomFichier,int mode);
 
 /**
 *

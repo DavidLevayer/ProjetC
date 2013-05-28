@@ -6,11 +6,13 @@
 *
 *
 **/
-FILE* ouvrir (char* nomFichier)
+FILE* ouvrir (char* nomFichier, int mode)
+// mode = 0 --< fichier existe "r"        sinon "w"
 {
 	FILE* f = NULL;
-	f = fopen(nomFichier, "r");	
-		
+	if (mode==0) f = fopen(nomFichier, "r");	
+	else f = fopen(nomFichier, "w");
+	
 	if (f != NULL)
   {
   	return f;
