@@ -1,7 +1,7 @@
 /**
-* Auteurs :
-* Date :
-* Projet :
+* Auteurs : Augustin & Jerome
+* Date : 28/05/2013
+* Projet : Compression
 * Version :
 **/
 
