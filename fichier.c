@@ -4,10 +4,9 @@
 
 /**
 *
-*
+* mode = 0 --< fichier existe "r" sinon "w"
 **/
 FILE* ouvrir (char* nomFichier, int mode)
-// mode = 0 --< fichier existe "r"        sinon "w"
 {
 	FILE* f = NULL;
 	if (mode==0) f = fopen(nomFichier, "r");	
@@ -36,21 +35,19 @@ int fermer (FILE* fichier)
 }
 
 
-int tailleFichier(const char* nom, long* taille)
+int tailleFichier(const FILE* f, long* taille)
 {
 	{
     /* Cette fonction retourne 0 en cas de succes, une valeur differente dans le cas contraire. */
     /* La taille du fichier, si elle a pu etre calculee, est retournee dans *taille                */
- 
-    FILE* f;
-    int ret = 0;
- 
-    f = fopen(nom, "rb");   
+
+    int ret = 0;  
+
     if (f != NULL)
     {
         fseek(f, 0, SEEK_END); /* aller a la fin du fichier */
         *taille = ftell(f); /* lire l'offset de la position courante par rapport au debut du fichier */
-        fclose(f);
+ 		rewind(f);
     }
     else
         ret = 1;
