@@ -5,7 +5,7 @@
 int main ()
 {
 	#ifdef DEBUG
-	printf("Salutations...\n");
+	printf("Salutations voyageur paix et guerison sur ton peuple\n");
 	#endif
 
 	return 0;
