@@ -5,39 +5,47 @@
 * Version : 1.0
 **/
 
-
 #include "lzw.h"
-#include "fichier.h"
-#include "dictionnaire.h"
 
 /**
 *
 *
 **/
-int compresser (char *nom, int entreeStandard)
+int compresser (FILE *fi, FILE *fo)
 {
-	char *w;
+	Code w;
 	char a;
-	int i,taillePrefixe=1;
-	long nbOctects;
+	int i,code;
+	long nbOctets;
 
 	// On récupère la taille du fichier à compresser
-	if (fsize(nom, &nbOctets)!=0) return 2;
-
-	// Ouverture du fichier à compresser
-	FILE* f = ouvrir(nom);	
-	if (f==NULL) return 1;
+	if (tailleFichier(fi, &nbOctets)!=0) return 1;
 
 	// Initialisation du dictionnaire
-	Dico d = initialiser();
+	initialiser();
 
-	fgets(&w,taillePrefixe,f);
+	fgets(w.valeur,1,fi);
 
 	for(i=1;i<nbOctets-1;i++)
 	{
-		fgets(&a,1,f);
+		fgets(&a,1,fi);
+		if (rechercher(w,&a,&code))
+		{
+			// w <--- w + a
+			w.taille++;
+			continue;
+		}
+		else
+		{
+			//fprintf(fo,code); // à débugger
+			ajouterElement(w,&a);
+			*w.valeur = a;
+			w.taille = 1;
+		}
 		
 	}
-		
+
+	//fprintf(fo,w); // à débugger
+	
 	return 0;
 }

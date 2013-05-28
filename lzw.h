@@ -11,6 +11,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "fichier.h"
+#include "dictionnaire.h"
+
 #endif
 
 /**
