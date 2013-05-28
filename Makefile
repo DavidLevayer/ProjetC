@@ -14,7 +14,7 @@ all: $(EXEC)
 lzw.o: lzw.c lzw.h fichier.h dictionnaire.h
 	$(CC) $(FLAGS) -c $<
 
-main.o: main.c lzw.h
+main.o: main.c lzw.h fichier.h
 	$(CC) $(FLAGS) -c $<
 
 $(EXEC): $(OBJS)
