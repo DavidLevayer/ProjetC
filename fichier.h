@@ -25,3 +25,10 @@ FILE* ouvrir (char* nomFichier);
 **/
 int fermer (FILE* fichier);
 
+
+/**
+*
+*
+**/
+int tailleFichier(const char* nom, long* taille);
+
