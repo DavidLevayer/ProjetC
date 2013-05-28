@@ -31,13 +31,13 @@ int compresser (FILE *fi, FILE *fo)
 		fgets(&a,1,fi);
 		if (rechercher(w,&a,&code))
 		{
-			// w <--- w + a
+			w = fusion (w,&a); // w <--- w + a
 			w.taille++;
 			continue;
 		}
 		else
 		{
-			//fprintf(fo,code); // à débugger
+			fprintf(fo,"%d",code);
 			ajouterElement(w,&a);
 			*w.valeur = a;
 			w.taille = 1;
@@ -45,7 +45,7 @@ int compresser (FILE *fi, FILE *fo)
 		
 	}
 
-	//fprintf(fo,w); // à débugger
+	fprintf(fo,"%d",code);
 	
 	return 0;
 }
