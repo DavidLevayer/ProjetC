@@ -112,7 +112,7 @@ int rechercher(Code prefix, char* mono, int *code)
 **/
 char *codeVersChaine (Code code, int longueur)
 {
-
+	return NULL;
 }
 
 /**
@@ -121,7 +121,7 @@ char *codeVersChaine (Code code, int longueur)
 **/
 Code sequenceVersCode (Code sequence, int longueur)
 {
-
+	return NULL;
 }
 
 
@@ -131,9 +131,7 @@ Code sequenceVersCode (Code sequence, int longueur)
 **/
 Code fusion (Code prefix, char* mono)
 {
-
 	if (mono==NULL)return prefix;
-
 	int i=0;	
 	Code c;
 	c.taille = prefix.taille + 1;
