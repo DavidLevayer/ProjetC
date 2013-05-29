@@ -7,14 +7,15 @@
 
 #ifndef LIST_H
 #define	LIST_H
+#define TAILLE_TAB 10
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 typedef struct strCode {
-	char *valeur;
-        int longueur; // longueur de la chaine de caractere
+	unsigned char *valeur;
+  int longueur; // longueur de la chaine de caractere
 } Code; 
 
 typedef struct strucList{
@@ -30,7 +31,9 @@ typedef struct strDico{
 
 //static Dico d;
 int initialiser();
+int ajoutEnQueue(int valeur);
 int afficherListe();
+int rechercher(Code prefix, char* mono, int *code);
+int ajouterElement (Code prefix, char* mono);
 
 #endif
-

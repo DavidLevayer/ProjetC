@@ -7,10 +7,11 @@
  */
 static Dico d;
 
-Code* creationCodeInit(int i){
+Code* creationCodeInit(char* car){
+		int i=0;
     Code* mot = malloc(sizeof(Code*));
     mot->valeur = malloc(sizeof(char));
-    *mot->valeur = i;
+   	//strcpy(mot->valeur, car);
     mot->longueur =1;
     return mot;
 }
@@ -74,4 +75,29 @@ int afficherListe(){
         tmp = tmp->nextp;
     }
     return 1;
+}
+
+
+Code fusion (Code prefix, char* mono)
+{
+	if (mono==NULL)return prefix;
+
+	int i=0;	
+	Code c;
+	c.longueur = prefix.longueur + 1;
+	c.valeur = malloc((c.longueur)*sizeof(char));
+	while(i<prefix.longueur)
+	{
+		c.valeur[i] = prefix.valeur[i];
+		i++;
+	}
+	c.valeur[i] = *mono;
+	return c;
+}
+
+int ajouterElement (Code prefix, char* mono)
+{
+	Code c = fusion(prefix,mono);
+	
+	return 0;
 }
