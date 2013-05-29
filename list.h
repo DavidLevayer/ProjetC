@@ -12,13 +12,24 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct strCode {
+	char *valeur;
+        int longueur; // longueur de la chaine de caractere
+} Code; 
+
 typedef struct strucList{
+    struct strCode* mot;
     int val;
     struct strucList* nextp;
 }List;
 
-List* initialiser();
-void afficherListe(List* l);
+typedef struct strDico{
+    struct strucList* beginp;
+    struct strucList* finalp;
+}Dico;
+
+Dico initialiser();
+void afficherListe(Dico l);
 
 #endif
 
