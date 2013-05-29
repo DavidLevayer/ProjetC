@@ -48,6 +48,7 @@ void afficherCode(Code c)
 	printf("\nTaille du code : %d\n",c.taille);
 	printf("############\n");
 }
+
 	
 
 char extrairePremier(char *prefix)
@@ -73,6 +74,7 @@ int ajouterElement (Code prefix, char* mono)
 	return 0;
 }
 
+
 int compareCode(Code c1, Code c2)
 {
 	int j;
@@ -82,8 +84,7 @@ int compareCode(Code c1, Code c2)
 		if(c1.valeur[j]!=c2.valeur[j]) return 0;
 	}
 	return 1;
-	
-}
+
 
 /*
  * 0 si pas trouver 1 sinon
@@ -122,6 +123,7 @@ Code sequenceVersCode (Code sequence, int longueur)
 {
 
 }
+
 
 /**
 *
