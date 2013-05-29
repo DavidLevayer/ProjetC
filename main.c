@@ -2,13 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fichier.h"
-#include "dictionnaire.h"
+#include "list.h"
 
-int main(int argc, char **argv)
-{
-	initialiser();
-	afficherDic();
-	return 0;
+int main(int argc, char **argv){
+    initialiser();
+    afficherListe();
+    return 1;
 }
 
