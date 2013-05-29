@@ -1,146 +1,96 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
 #include "dictionnaire.h"
 
-static Dico monDico;
+static Dico d;
 
-int initialiser()
-{
-
-	int i;
-	Code c;
-	c.taille = 1;
-	monDico.table = malloc (MAX_TAB * sizeof(Code));
-	monDico.taille = MAX_TAB;
-	for(i=0;i<MAX_TAB;i++)
-	{
-		c.valeur = malloc(sizeof(unsigned char));
-		c.valeur[0] = i;
-		monDico.table[i] = c; 
-	}
-	monDico.indice = MAX_TAB;
-	return 0;
+Cellule creationCell(Code mot,int num){
+    Cellule newCell;
+    newCell.mot.valeur = malloc(mot.taille*sizeof(char));
+    //newCell.mot.taille = (int)malloc(sizeof(int));
+    *newCell.mot.valeur = *mot.valeur;
+    newCell.mot.taille = mot.taille;
+    //newCell.num = (int)malloc(sizeof(int));
+    newCell.num = num;
+    newCell.nextp =malloc(sizeof(Cellule*));
+    return newCell;
 }
 
-void afficher ()
-{
-	int i,j;
-	for(i=0;i<monDico.taille;i++)
-	{
-		printf("num. %d : ",i);
-		for(j=0;j<monDico.table[i].taille;j++)
-		{
-			if (monDico.table[i].valeur[j]==' ') printf("_");
-			else printf("%c",monDico.table[i].valeur[j]);
-		}
-		printf("\n");
-	}
+Code creationMot(int i, int taille){
+    Code mot;
+    mot.valeur = malloc(taille*sizeof(char));
+    //mot.taille=(int)malloc(sizeof(int));
+    mot.taille=taille;
+    *(mot.valeur)=i;
+    return mot;
 }
 
-void afficherCode(Code c)
-{
-	printf("############\n");
-	printf("Valeur du code : ");
-	int i;
-	for(i=0;i<c.taille;i++)
-		printf("%c",c.valeur[i]);
-	printf("\nTaille du code : %d\n",c.taille);
-	printf("############\n");
-}
-	
-
-char extrairePremier(char *prefix)
-{
-	if (prefix != NULL) return prefix[0];
-	else printf("Erreur : prefixe null !");
+void ajouterCellule(int i, int taille){
+    printf("%d %d\n",i,d.beginp->num);
+    Cellule newCell = creationCell(creationMot(i,taille),i);
+    d.finalp->nextp=&newCell;
+    d.finalp=&newCell;
+    d.finalp->nextp=NULL;
+    //d.finalp->nextp=element;
 }
 
-/**
-*ajoute l'élément s'il n'est pas présent ne fait rien sinon... retourne le numero du code que l'on souhaite ajouter
-*
-**/
-int ajouterElement (Code prefix, char* mono)
-{
-	Code c = fusion(prefix,mono);
-	if (monDico.indice > monDico.taille-1)
-	{
-		monDico.table = realloc(monDico.table,(monDico.taille+TAILLE_TAB)*sizeof(Code));
-		monDico.taille += TAILLE_TAB;
-	}
-	monDico.table[monDico.indice] = c;
-	monDico.indice++;
-	return 0;
+void initialiser(){
+    int i=1;
+    d.beginp = malloc(sizeof(Cellule*));
+    d.finalp = malloc(sizeof(Cellule*));
+    //Cellule* currentp = malloc(sizeof(Cellule*));
+    Cellule newCell = creationCell(creationMot(0,1),0);
+    d.beginp=&newCell;
+    d.finalp=&newCell;
+    //currentp=&newCell;
+    d.finalp->nextp=NULL;
+    ajouterCellule(1,1);
+    //printf("%c\n",d.finalp->num);
+    ajouterCellule(2,1);
+    ajouterCellule(3,1);
+       
 }
 
-int compareCode(Code c1, Code c2)
-{
-	int j;
-	if(c1.taille != c2.taille) return 0;
-	for(j=0;j<c1.taille;j++)
-	{
-		if(c1.valeur[j]!=c2.valeur[j]) return 0;
-	}
-	return 1;
-	
+int ajouterElement (Code prefix, char* mono){
+    return 0;
+};
+
+int rechercher(Code prefix, char* mono, int *code){
+    return 0;
+}
+
+char *codeVersChaine (Code code, int longueur){
+    return "coco";
+}
+
+Code sequenceVersCode (Code sequence, int longueur){
+    return sequence;
+}
+
+Code fusion (Code prefix, char* mono){
+    return prefix;
 }
 
 /*
- * 0 si pas trouver 1 sinon
+ * Les fonctions d'affichage
  */
-int rechercher(Code prefix, char* mono, int *code)
-{
-	Code c = fusion(prefix,mono);
-	int i = 0,j;
 
-	while(i<monDico.taille && compareCode(monDico.table[i],c)!=1)
-		i++; 
-	
-	if (i==monDico.taille) return 0;
-	else
-	{
-		*code = i;
-		return 1;
-	}
 
+int afficherCode(Code mot){
+    printf("%c\n",*mot.valeur);
+    return 1;
+}
+int afficherCell(Cellule cell){
+    printf("%c\n",*cell.mot.valeur);
+    printf("%d\n",cell.num);
+    printf("%d\n",cell.mot.taille);
+    return 1;
 }
 
-/**
-*
-*
-**/
-char *codeVersChaine (Code code, int longueur)
-{
-
-}
-
-/**
-*
-*
-**/
-Code sequenceVersCode (Code sequence, int longueur)
-{
-
-}
-
-/**
-*
-*
-**/
-Code fusion (Code prefix, char* mono)
-{
-
-	if (mono==NULL)return prefix;
-
-	int i=0;	
-	Code c;
-	c.taille = prefix.taille + 1;
-	c.valeur = malloc((prefix.taille+1)*sizeof(char));
-	while(i<prefix.taille)
-	{
-		c.valeur[i] = prefix.valeur[i];
-		i++;
-	}
-	c.valeur[i] = *mono;
-	return c;
+int afficherDic(){
+    Cellule* pointeur;
+    pointeur= d.beginp->nextp;
+    printf("%d\n",pointeur->num);
 }
