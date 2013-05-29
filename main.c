@@ -5,19 +5,24 @@
 #include "list.h"
 
 int main(int argc, char **argv){
-    /*int code=0;
-    unsigned char* chat=NULL;
-    Code* c = creationCodeInit(65);
-    Code* fist = creationCodeInit(52);
-    fist->longueur=2;*/
+    Code* c1 = malloc(sizeof(Code*));
+    Code* c2 = malloc(sizeof(Code*));
+    int l=0;
+    unsigned char* test = NULL;
+    
+    c1 = creationCodeInit("uk",2);
+    c2 = creationCodeInit("ukt",3);
+    
     initialiser();
-    afficherListe();
-    /*ajouterElement(*c,"u");
-    ajouterElement(*c,"k");
-    chat= codeVersChaine(*fist,&code);
-    if(chat==NULL)
-        printf("Va te pendre");
-    else printf("%s%d",chat,code);*/
+    ajouterElement(*c1,"t");
+    test = codeVersChaine(*c2,&l);
+    if(test==NULL)
+        printf("va te pendre y a rien");
+    else{
+        afficherChaine(test,l);
+        printf(" %d",l);
+    }
+    //afficherListe();
     return 1;
 }
 

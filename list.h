@@ -33,6 +33,8 @@ Code* creationCodeInit(unsigned char* i,int taille);
         
 int initialiser();
 
+int afficherChaine(unsigned char* chaine,int taille);
+
 int afficherListe();
 
 int ajouterElement (Code prefix, char* mono);

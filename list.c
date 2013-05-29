@@ -41,7 +41,7 @@ int ajouterElement (Code prefix, char* mono){
     nouvelElement->nextp = NULL;
     d.finalp->nextp=nouvelElement;
     d.finalp=d.finalp->nextp;
-return 0;
+    return 0;
 }
 
 int initialiser(){
@@ -61,14 +61,24 @@ int initialiser(){
         ajouterElement(*code,NULL);
         i++;
     }
+    free(cheat);
     return 1;
 }
 
-
+int afficherChaine(unsigned char* chaine,int taille){
+    int i=0;
+    while(i<taille){
+        printf("%c",*(chaine+i));
+        i++;
+    }
+    return 1;
+}
 int afficherListe(){
     List* tmp = d.beginp;
     while(tmp != NULL){
-        printf("%c",*tmp->mot->valeur);
+        printf("%d ",tmp->val);
+        afficherChaine(tmp->mot->valeur,tmp->mot->longueur);
+        printf("\n");
         tmp = tmp->nextp;
     }
     return 1;
