@@ -5,7 +5,7 @@
 
 static Dico monDico;
 
-Dico initialiser()
+int initialiser()
 {
 
 	int i;
@@ -20,7 +20,7 @@ Dico initialiser()
 		monDico.table[i] = c; 
 	}
 	monDico.indice = MAX_TAB;
-	
+	return 0;
 }
 
 void afficher ()

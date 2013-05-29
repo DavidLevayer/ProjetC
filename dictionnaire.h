@@ -33,7 +33,7 @@ typedef struct strDico{
 *
 *
 **/
-Dico initialiser ();
+int initialiser ();
 
 void afficher ();
 void afficherCode(Code c);
