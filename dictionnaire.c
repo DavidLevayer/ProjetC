@@ -9,45 +9,39 @@ static Dico d;
 Cellule creationCell(Code mot,int num){
     Cellule newCell;
     newCell.mot.valeur = malloc(mot.taille*sizeof(char));
-    //newCell.mot.taille = (int)malloc(sizeof(int));
     *newCell.mot.valeur = *mot.valeur;
     newCell.mot.taille = mot.taille;
-    //newCell.num = (int)malloc(sizeof(int));
     newCell.num = num;
     newCell.nextp =malloc(sizeof(Cellule*));
+    newCell.nextp=NULL;
     return newCell;
 }
 
 Code creationMot(int i, int taille){
     Code mot;
     mot.valeur = malloc(taille*sizeof(char));
-    //mot.taille=(int)malloc(sizeof(int));
     mot.taille=taille;
     *(mot.valeur)=i;
     return mot;
 }
 
-void ajouterCellule(int i, int taille){
-    printf("%d %d\n",i,d.beginp->num);
+Cellule ajouterCellule(int i, int taille){
     Cellule newCell = creationCell(creationMot(i,taille),i);
     d.finalp->nextp=&newCell;
     d.finalp=&newCell;
-    d.finalp->nextp=NULL;
-    //d.finalp->nextp=element;
+    return newCell;
 }
 
 void initialiser(){
     int i=1;
     d.beginp = malloc(sizeof(Cellule*));
     d.finalp = malloc(sizeof(Cellule*));
-    //Cellule* currentp = malloc(sizeof(Cellule*));
-    Cellule newCell = creationCell(creationMot(0,1),0);
-    d.beginp=&newCell;
-    d.finalp=&newCell;
-    //currentp=&newCell;
+    d.beginp=NULL; d.finalp=NULL;
+    Cellule firstCell = creationCell(creationMot(0,1),0);
+    d.beginp=&firstCell;
+    d.finalp=&firstCell;
     d.finalp->nextp=NULL;
     ajouterCellule(1,1);
-    //printf("%c\n",d.finalp->num);
     ajouterCellule(2,1);
     ajouterCellule(3,1);
        

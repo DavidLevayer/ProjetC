@@ -16,7 +16,7 @@
 
 typedef struct strCode {
 	char *valeur;
-        int taille;
+  int taille;
 } Code; 
 
 /*
