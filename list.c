@@ -5,6 +5,8 @@
 /*
  * structure avec un pointeur fonctionne
  */
+static Dico d;
+
 Code* creationCodeInit(int i){
     Code* mot = malloc(sizeof(Code*));
     mot->valeur = malloc(sizeof(char));
@@ -20,7 +22,7 @@ Code* creationCodeInit(int i){
     return mot;
 }*/
 
-List* ajoutEnQueu(List* l, int valeur){
+/*List* ajoutEnQueu(List* l, int valeur){
     List* nouvelElement = malloc(sizeof(List*));
     List* temp=l;
     nouvelElement->val = valeur;
@@ -28,7 +30,6 @@ List* ajoutEnQueu(List* l, int valeur){
     nouvelElement->nextp = NULL;
   
     if(l == NULL){
-        /* Si la liste est videé il suffit de renvoyer l'élément créé */
         return nouvelElement;
     }
     else{
@@ -38,30 +39,39 @@ List* ajoutEnQueu(List* l, int valeur){
         temp->nextp = nouvelElement;
         return l;
     }
+}*/
+
+int ajoutEnQueue(int valeur){
+    List* nouvelElement = malloc(sizeof(List*));
+    nouvelElement->val = valeur;
+    nouvelElement->mot = creationCodeInit(valeur);
+    nouvelElement->nextp = NULL;
+    d.finalp->nextp=nouvelElement;
+    d.finalp=d.finalp->nextp;
+    return 1;
 }
 
-Dico initialiser(){
+int initialiser(){
     int i=1;
-    Dico d;
     d.beginp =malloc(sizeof(List*));
     d.beginp->val=0;
     d.beginp->mot =creationCodeInit(0);
     d.beginp->nextp=NULL;
-    //List* l = malloc(sizeof(List*));
-    //l->val=0;
-    //l->nextp=NULL;
-    while(i<255){
-        d.beginp=ajoutEnQueu(d.beginp,i);
+    d.finalp=d.beginp;
+    while(i<256){
+        ajoutEnQueue(i);
+        //d.beginp=ajoutEnQueu(d.beginp,i);
         i++;
     }
-    return d;
+    return 1;
 }
 
 
-void afficherListe(Dico l){
-    List* tmp = l.beginp;
+int afficherListe(){
+    List* tmp = d.beginp;
     while(tmp != NULL){
         printf("%c", *tmp->mot->valeur);
         tmp = tmp->nextp;
     }
+    return 1;
 }

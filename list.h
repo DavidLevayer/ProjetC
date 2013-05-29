@@ -28,8 +28,9 @@ typedef struct strDico{
     struct strucList* finalp;
 }Dico;
 
-Dico initialiser();
-void afficherListe(Dico l);
+//static Dico d;
+int initialiser();
+int afficherListe();
 
 #endif
 
