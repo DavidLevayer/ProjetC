@@ -35,7 +35,7 @@ int fermer (FILE* fichier)
 }
 
 
-int tailleFichier(const FILE* f, long* taille)
+int tailleFichier(FILE* f, long* taille)
 {
 	{
     /* Cette fonction retourne 0 en cas de succes, une valeur differente dans le cas contraire. */
@@ -47,11 +47,11 @@ int tailleFichier(const FILE* f, long* taille)
     {
         fseek(f, 0, SEEK_END); /* aller a la fin du fichier */
         *taille = ftell(f); /* lire l'offset de la position courante par rapport au debut du fichier */
- 		rewind(f);
+ 				rewind(f);
     }
     else
         ret = 1;
  
     return ret;
-}
+	}
 }

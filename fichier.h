@@ -30,5 +30,5 @@ int fermer (FILE* fichier);
 *
 *
 **/
-int tailleFichier(const FILE* f, long* taille);
+int tailleFichier(FILE* f, long* taille);
 
