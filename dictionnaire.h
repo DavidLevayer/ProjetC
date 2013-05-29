@@ -12,32 +12,42 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_TAB 256
-#define TAILLE_TAB 10
-
-
+#endif
 
 typedef struct strCode {
-	unsigned char *valeur;
+	char *valeur;
         int taille;
 } Code; 
 
+/*
+ * @mot : chaine de caractere ascii + taille de la chaine
+ * @param : num est le numero du mot 
+ */
 
-
+typedef struct strCellule{
+    Code mot;
+    int num;
+    struct Cellule* nextp;
+}Cellule;
+/*
+ * @param : beginp : pointeur de debut de chaine
+ * @param : finalp : pointeur vers la dernière cellule
+ */
 typedef struct strDico{
-    Code* table;
-    int taille;
-	int indice;
+    Cellule* beginp;
+    Cellule* finalp;
 }Dico;
+
+static Dico d;
 /**
 *
 *
 **/
-int initialiser ();
+Code creationMot(int i, int taille);
+Cellule creationCell(Code mot,int num);
 
-void afficher ();
-void afficherCode(Code c);
-int compareCode(Code c1, Code c2);
+void initialiser ();
+
 /**
 *ajoute l'élément s'il n'est pas présent ne fait rien sinon... retourne le numero du code que l'on souhaite ajouter
 *
@@ -45,7 +55,7 @@ int compareCode(Code c1, Code c2);
 int ajouterElement (Code prefix, char* mono);
 
 /*
- * 0 si pas trouver 1 sinon
+ * 0 si pas trouver 1 sinon modifie int *code pour permettre la recuperation du code et renvoi 1
  */
 int rechercher(Code prefix, char* mono, int *code);
 
@@ -67,4 +77,7 @@ Code sequenceVersCode (Code sequence, int longueur);
 **/
 Code fusion (Code prefix, char* mono);
 
-#endif
+
+int afficherDic();
+int afficherCode(Code mot);
+int afficherCell(Cellule cell);
