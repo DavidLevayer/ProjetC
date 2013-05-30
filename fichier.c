@@ -138,6 +138,7 @@ int ecrire(FILE* f, int v)
 			nbBits = 9;
 			break;
 	}
+	return 0;
 
 }
 
