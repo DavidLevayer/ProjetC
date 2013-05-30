@@ -18,7 +18,7 @@ void ecrireBinaire(FILE* fo, int v)
 int compresser (FILE *fi, FILE *fo)
 {
 	Code w;
-	char a;
+	int a;
 	int code;
 	long nbOctets;
 	
@@ -31,9 +31,9 @@ int compresser (FILE *fi, FILE *fo)
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
-	while ((a = getc(fi)) != EOF)
+	while ((a = fgetc(fi)) != EOF)
 	{
-		printf("valeur de a : %c (hexa: %x)\n",a,a);
+
 		if (rechercher(w,&a,&code))
 		{
 			w = fusion (w,&a); // w <--- w + a (avec taille++ inclu)
