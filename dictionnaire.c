@@ -61,7 +61,17 @@ int initialiser(){
         ajouterElement(*code,NULL);
         i++;
     }
+    
+    unsigned char* cheat2 =malloc(2*sizeof(char));
+    while(i<266)
+    {
+    	*cheat2 = i;
+    	code = creationCodeInit(cheat2,2);
+    	ajouterElement(*code,NULL);
+    	i++;
+    }
     free(cheat);
+    free(cheat2);
     return 1;
 }
 

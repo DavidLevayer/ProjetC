@@ -55,7 +55,9 @@ int main(int argc, char **argv)
 
 
 	if (oper==1)
-		compresser(fi,fo);
+		{compresser(fi,fo);
+		afficherListe();}
+		
 	else if (oper==2)
 		printf("Decompression(fi,fo)\n");
 
