@@ -6,9 +6,6 @@
 
 int main(int argc, char **argv)
 {
-    #ifdef DEBUG
-    printf("Salutations voyageur paix et guerison sur ton peuple\n");
-    #endif
     int i;
     int oper = 0;
     int sortie = 0;
@@ -18,24 +15,34 @@ int main(int argc, char **argv)
     FILE* fi;
     FILE* fo;
 
-    for(i=1;i<argc;i++)
+    if (argc==1) {
+      fi = ouvrir("test.txt",0);
+      fo = ouvrir("res.txt",1);
+      compresser(fi,fo);
+      return 0;
+    }
+    else 
     {
-        if (strcmp("-c",argv[i]) == 0)
-              oper = 1;
-        else if (strcmp("-d",argv[i]) == 0)
-              oper = 2;
-        else if (strcmp("-o",argv[i]) == 0)
-        {
-            fichierSortie = argv[i+1];
-            i++;
-            sortie = 1;
-        }
-        else
-        {
-            fichierEntree =  argv[i];
-            entree = 1;
-        }
-    }       
+    
+      for(i=1;i<argc;i++)
+      {
+	  if (strcmp("-c",argv[i]) == 0)
+		oper = 1;
+	  else if (strcmp("-d",argv[i]) == 0)
+		oper = 2;
+	  else if (strcmp("-o",argv[i]) == 0)
+	  {
+	      fichierSortie = argv[i+1];
+	      i++;
+	      sortie = 1;
+	  }
+	  else
+	  {
+	      fichierEntree =  argv[i];
+	      entree = 1;
+	  }
+      }     
+    }
 
     if (oper!=0 && entree==1)
         fi = ouvrir(fichierEntree,0);
@@ -54,23 +61,18 @@ int main(int argc, char **argv)
 
 
 
+
 	if (oper==1)
-		{compresser(fi,fo);
-		afficherListe();}
+		compresser(fi,fo);
 		
 	else if (oper==2)
 		printf("Decompression(fi,fo)\n");
-
-
-    else if (oper==2)
-        printf("Decompression(fi,fo)\n");
-
    
     if (entree==1)
         fermer(fi);
     if (sortie==1)
         fermer(fo);
-
+		
 
     return 0;
 }

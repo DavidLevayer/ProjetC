@@ -31,7 +31,6 @@ int compresser (FILE *fi, FILE *fo)
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
-
 	for(i=1;i<nbOctets-1;i++)
 	{
 		a = fgetc(fi);

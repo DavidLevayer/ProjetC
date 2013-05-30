@@ -14,26 +14,31 @@
 
 #define MAX_TAB 256
 #define TAILLE_TAB 10
+#define RESERVE 10
+
+#define FIN 0x100
+#define INC 0x101
+#define RAZ 0x102
 
 
 
 typedef struct strCode {
-    unsigned char *valeur;
+	unsigned char *valeur;
         int taille;
-} Code;
+} Code; 
 
 
 
 typedef struct strDico{
     Code* table;
     int taille;
-    int indice;
+	int indice;
 }Dico;
 /**
 *
 *
 **/
-int initialiser ();
+Dico initialiser ();
 
 void afficher ();
 void afficherCode(Code c);

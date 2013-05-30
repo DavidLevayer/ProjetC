@@ -4,32 +4,30 @@
 #include "dictionnaire.h"
 
 static Dico d;
+void supprimerMemoire(List* listp);
 
 Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
     Code* mot = malloc(sizeof(Code*));
     mot->valeur = malloc(taille*sizeof(unsigned char));
-    while(i<taille){
-        mot->valeur[i]=car[i];
-        i++;
+    if(car==NULL){
+        mot->valeur=NULL;
+        mot->taille=0;
+        return mot;
     }
-    mot->taille =taille;
-    return mot;
+    else{
+        while(i<taille){
+            mot->valeur[i]=car[i];
+            i++;
+        }
+        mot->taille =taille;
+        return mot;
+    }
+    
 }
 
 
 
-/*int ajoutEnQueue(int valeur){
-    unsigned char* cheat =NULL;
-    *cheat = valeur;
-    List* nouvelElement = malloc(sizeof(List*));
-    nouvelElement->val = valeur;
-    nouvelElement->mot = creationCodeInit(cheat,1);
-    nouvelElement->nextp = NULL;
-    d.finalp->nextp=nouvelElement;
-    d.finalp=d.finalp->nextp;
-    return 1;
-}*/
 
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
@@ -47,6 +45,7 @@ int ajouterElement (Code prefix, char* mono){
 int initialiser(){
     int i=1;
     unsigned char* cheat =malloc(sizeof(char));
+    unsigned char* cheat2 = NULL;
     Code* code = malloc(sizeof(Code*));
     d.beginp =malloc(sizeof(List*));
     d.beginp->val=0;
@@ -61,19 +60,19 @@ int initialiser(){
         ajouterElement(*code,NULL);
         i++;
     }
-    
-    unsigned char* cheat2 =malloc(2*sizeof(char));
-    while(i<266)
-    {
-    	*cheat2 = i;
-    	code = creationCodeInit(cheat2,2);
-    	ajouterElement(*code,NULL);
-    	i++;
+
+    while(i<266){
+        code = creationCodeInit(NULL,0);
+        ajouterElement(*code,NULL);
+        i++;
+
     }
+    supprimerMemoire(d.beginp->nextp);
     free(cheat);
     free(cheat2);
     return 1;
 }
+
 
 
 int afficherChaine(unsigned char* chaine,int taille){
@@ -157,3 +156,21 @@ unsigned char *codeVersChaine (int code, int* longueur){
         return c;
     }
 }
+
+
+void supprimerMemoire(List* listp)
+{
+	List* save= malloc(sizeof(List*));
+	save=listp;
+	listp=listp->nextp;
+	while(listp!=NULL)
+	{
+		List* aSupprimer = listp;
+		listp=aSupprimer->nextp;
+		free(aSupprimer);
+	}
+	save->nextp=NULL;
+	d.finalp=save;
+}
+
+
