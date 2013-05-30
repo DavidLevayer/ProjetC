@@ -5,16 +5,16 @@
 #
 
 CC = gcc
-OBJS = main.o list.o
+OBJS = main.o list.o fichier.o lzw.o
 EXEC = main
 FLAGS = -Wall -g -DDEBUG
 
 all: $(EXEC) 
 
-list.o: list.c 
+lzw.o: lzw.c lzw.h fichier.h list.h
 	$(CC) $(FLAGS) -c $<
 
-main.o: main.c list.h 
+main.o: main.c lzw.h fichier.h
 	$(CC) $(FLAGS) -c $<
 
 $(EXEC): $(OBJS)
