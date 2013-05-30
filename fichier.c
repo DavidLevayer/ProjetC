@@ -146,7 +146,7 @@ int lire (FILE* f, int* value)
 {
 	unsigned int v,buffer;	
 	unsigned int aLire,restePrecedent,ajoutCourant;
-
+	//printf("DEBUG LIRE ######################\n");
 	while(nbReste<nbBits)
 	{
 		fread(&buffer,1,1,f);
@@ -156,17 +156,22 @@ int lire (FILE* f, int* value)
 	
 	aLire = reste >> (nbReste-nbBits);
 	*value = aLire;
+
 	/*
 	printf("Valeur du reste : %d (hexa: %x)\n",reste,reste);
 	printf("Valeur de nbReste : %d\n",nbReste);
 	printf("Valeur aLire : %d (hexa: %x)\n",aLire,aLire);
 	*/
+
 	reste = reste & creerMasque(nbReste-nbBits);
 	nbReste = nbReste - nbBits;
+
 	/*
 	printf("Valeur du nouveau reste : %d (hexa: %x)\n",reste,reste);
 	printf("Valeur de nouveau nbReste : %d\n",nbReste);
+	printf("#################################\n");
 	*/
+
 	return 0;
 }
 
@@ -180,4 +185,16 @@ int creerMasque (int nbUn)
 		res = res | 0x1;
 	}
 	return res;
+}
+
+int setNbBits (int valeur)
+{
+	nbBits = valeur;
+	return 0;
+}
+
+int incNbBits ()
+{
+	nbBits++;
+	return 0;
 }

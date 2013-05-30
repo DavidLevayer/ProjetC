@@ -4,7 +4,14 @@
 #include "dictionnaire.h"
 
 static Dico d;
-void supprimerMemoire(List* listp);
+int supprimerMemoire(List* listp);
+
+/*
+ * @param : car --> chaine de caractere que l'on souhaite voir intégré à une cellule Code
+ * @param : taille ---> longueur de la chaine de caractere car
+ * la fonction permet de créer une nouvelle cellule de type Code
+ * on peut avoir une chaine vide ---> permet d'ajouter les caracteres spéciaux lors de l'initialisation du dico 
+ */
 
 Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
@@ -25,9 +32,12 @@ Code* creationCodeInit(unsigned char* car,int taille){
     }
     
 }
-
-
-
+/*
+ *cette fonction ajoute uniquement en queue
+ * il y a une incrémentation de la valeur associée au code grâce au pointeur finalp
+ * une fois que tous les parametres nécessaires à la création du nouvelle cellule sont en place, 
+ * on décale le pointeur finalp sur cette nouvelle cellule.
+ */
 
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
@@ -42,6 +52,14 @@ int ajouterElement (Code prefix, char* mono){
     return 0;
 }
 
+/*
+ * permet de créer pour la premiere fois un dico
+ * il contient les 255 caracteres ascii
+ * il y a ensuite ajout de 10 caractères spéciaux nécessaires (par exemple end of file de code Ox100 ie 256)
+ * Pour éviter de rendre priver des chaines de caracteres pour les caracteres spéciaux on met la chaine NULL lors de chaque 
+ * cellule crée.
+ */
+
 int initialiser(){
     int i=1;
     unsigned char* cheat =malloc(sizeof(char));
@@ -49,6 +67,8 @@ int initialiser(){
     
     // creation de la premiere cellule pour amorcer l'initialisation
     d.beginp =malloc(sizeof(List*));
+    d.finalp =malloc(sizeof(List*));
+    d.middlep=malloc(sizeof(List*));
     d.beginp->val=0;
     *cheat =0;
     code = creationCodeInit(cheat,1);
@@ -56,7 +76,7 @@ int initialiser(){
     d.beginp->nextp=NULL;
     d.finalp=d.beginp;
     
-    // creation des 254 cellule acceuillant les mono caracteres ascii
+    // creation des 254 cellules acceuillant les monos caracteres ascii
     while(i<256){
         *cheat = i;
         code = creationCodeInit(cheat,1);
@@ -71,8 +91,9 @@ int initialiser(){
         code = creationCodeInit(NULL,0);
         ajouterElement(*code,NULL);
         i++;
-
     }
+    d.middlep=d.finalp;
+    
     free(cheat);
     free(code);
     return 1;
@@ -145,7 +166,11 @@ int rechercher(Code prefix, char* mono, int *code){
 }
 
 
-
+/*
+ * @ code : valeur de la chaine de caractere que l'on recherche 
+ * exemple : on veut la chaine associée au code 65 on trouve donc A
+ * @ longueur : valeur fictive. Elle ne sert qu'à retourner la longueur de la chaine de caractere trouvée
+ */
 
 unsigned char *codeVersChaine (int code, int* longueur){
     unsigned char* c =NULL;
@@ -163,7 +188,7 @@ unsigned char *codeVersChaine (int code, int* longueur){
 }
 
 
-void supprimerMemoire(List* listp)
+int supprimerMemoire(List* listp)
 {
 	List* save= malloc(sizeof(List*));
 	save=listp;
@@ -176,6 +201,22 @@ void supprimerMemoire(List* listp)
 	}
 	save->nextp=NULL;
 	d.finalp=save;
+	return 1;
 }
+
+int reinitialiser()
+{
+	supprimerMemoire(d.middlep);
+	return 1;
+}
+
+int supprimerDico()
+{
+	supprimerMemoire(d.beginp);
+	free(d.beginp);
+	d.beginp=d.finalp=d.middlep=NULL;
+	return 1;
+}
+
 
 
