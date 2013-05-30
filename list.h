@@ -45,7 +45,7 @@ int ajouterElement (Code prefix, char* mono);
 
 int rechercher(Code prefix, char* mono, int *code);
 
-unsigned char *codeVersChaine (Code code, int* longueur);
+unsigned char *codeVersChaine (int code, int* longueur);
 
 Code sequenceVersCode (Code sequence, int longueur);
 

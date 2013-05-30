@@ -124,6 +124,7 @@ int rechercher(Code prefix, char* mono, int *code){
 }
 
 
+<<<<<<< HEAD
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
     List* nouvelElement = malloc(sizeof(List*));
@@ -139,10 +140,10 @@ return 0;
 
 
 
-unsigned char *codeVersChaine (Code code, int* longueur){
+unsigned char *codeVersChaine (int code, int* longueur){
     unsigned char* c =NULL;
     List* pointeur = d.beginp;
-    while((pointeur!=NULL)&&(!compareCode(code,*pointeur->mot))){
+    while((pointeur!=NULL)&&(pointeur->val!=code)){
         pointeur= pointeur->nextp;
     }
     if(pointeur==NULL)
