@@ -41,18 +41,12 @@ int ajouterElement (Code prefix, char* mono){
     return 0;
 }
 
-unsigned char* concat2Int(int a,int b){
-    unsigned char* car = malloc(2*sizeof(char));
-    *car=a;
-    *(car+1)=b;
-    return car;
-}
-
 int initialiser(){
     int i=1;
     unsigned char* cheat =malloc(sizeof(char));
-    unsigned char* cheat2 = NULL;
     Code* code = malloc(sizeof(Code*));
+    
+    // creation de la premiere cellule pour amorcer l'initialisation
     d.beginp =malloc(sizeof(List*));
     d.beginp->val=0;
     *cheat =0;
@@ -60,21 +54,23 @@ int initialiser(){
     d.beginp->mot = code;
     d.beginp->nextp=NULL;
     d.finalp=d.beginp;
+    
+    // creation des 254 cellule acceuillant les mono caracteres ascii
     while(i<256){
         *cheat = i;
         code = creationCodeInit(cheat,1);
         ajouterElement(*code,NULL);
         i++;
     }
+    
+    // reservation de 10 cellule pour les caractères spéciaux
     while(i<266){
         code = creationCodeInit(NULL,0);
         ajouterElement(*code,NULL);
-        //cheat2 = concat2Int(1,i);
-        //code = creationCodeInit(cheat2,2);
-        //ajouterElement(*code,NULL);
         i++;
     }
     free(cheat);
+    free(code);
     return 1;
 }
 
