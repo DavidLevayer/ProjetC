@@ -1,8 +1,8 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "fichier.h"
+#include "lzw.h"
 
 int main(int argc, char **argv)
 {
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 
 
 	if (oper==1)
-		printf("Compression(fi,fo)\n");
+		compresser(fi,fo);
 	else if (oper==2)
 		printf("Decompression(fi,fo)\n");
 
