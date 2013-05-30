@@ -5,13 +5,13 @@
 #
 
 CC = gcc
-OBJS = main.o list.o fichier.o lzw.o
+OBJS = main.o dictionnaire.o fichier.o lzw.o
 EXEC = main
 FLAGS = -Wall -g -DDEBUG
 
 all: $(EXEC) 
 
-lzw.o: lzw.c lzw.h fichier.h list.h
+lzw.o: lzw.c lzw.h fichier.h dictionnaire.h
 	$(CC) $(FLAGS) -c $<
 
 main.o: main.c lzw.h fichier.h

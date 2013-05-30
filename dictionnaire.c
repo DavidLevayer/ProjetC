@@ -1,90 +1,142 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
-
 #include "dictionnaire.h"
 
 static Dico d;
 
-Cellule creationCell(Code mot,int num){
-    Cellule newCell;
-    newCell.mot.valeur = malloc(mot.taille*sizeof(char));
-    *newCell.mot.valeur = *mot.valeur;
-    newCell.mot.taille = mot.taille;
-    newCell.num = num;
-    newCell.nextp =malloc(sizeof(Cellule*));
-    newCell.nextp=NULL;
-    return newCell;
-}
-
-Code creationMot(int i, int taille){
-    Code mot;
-    mot.valeur = malloc(taille*sizeof(char));
-    mot.taille=taille;
-    *(mot.valeur)=i;
+Code* creationCodeInit(unsigned char* car,int taille){
+    int i=0;
+    Code* mot = malloc(sizeof(Code*));
+    mot->valeur = malloc(taille*sizeof(unsigned char));
+    while(i<taille){
+        mot->valeur[i]=car[i];
+        i++;
+    }
+    mot->taille =taille;
     return mot;
 }
 
-Cellule ajouterCellule(int i, int taille){
-    Cellule newCell = creationCell(creationMot(i,taille),i);
-    d.finalp->nextp=&newCell;
-    d.finalp=&newCell;
-    return newCell;
-}
 
-void initialiser(){
-    int i=1;
-    d.beginp = malloc(sizeof(Cellule*));
-    d.finalp = malloc(sizeof(Cellule*));
-    d.beginp=NULL; d.finalp=NULL;
-    Cellule firstCell = creationCell(creationMot(0,1),0);
-    d.beginp=&firstCell;
-    d.finalp=&firstCell;
-    d.finalp->nextp=NULL;
-    ajouterCellule(1,1);
-    ajouterCellule(2,1);
-    ajouterCellule(3,1);
-       
-}
+
+/*int ajoutEnQueue(int valeur){
+    unsigned char* cheat =NULL;
+    *cheat = valeur;
+    List* nouvelElement = malloc(sizeof(List*));
+    nouvelElement->val = valeur;
+    nouvelElement->mot = creationCodeInit(cheat,1);
+    nouvelElement->nextp = NULL;
+    d.finalp->nextp=nouvelElement;
+    d.finalp=d.finalp->nextp;
+    return 1;
+}*/
 
 int ajouterElement (Code prefix, char* mono){
-    return 0;
-};
-
-int rechercher(Code prefix, char* mono, int *code){
+    Code c = fusion(prefix,mono);
+    List* nouvelElement = malloc(sizeof(List*));
+    nouvelElement->val = d.finalp->val+1;
+    nouvelElement->mot = malloc(c.taille*sizeof(unsigned char));
+    nouvelElement->mot->valeur = c.valeur;
+    nouvelElement->mot->taille =c.taille;
+    nouvelElement->nextp = NULL;
+    d.finalp->nextp=nouvelElement;
+    d.finalp=d.finalp->nextp;
     return 0;
 }
 
-char *codeVersChaine (Code code, int longueur){
-    return "coco";
+int initialiser(){
+    int i=1;
+    unsigned char* cheat =malloc(sizeof(char));
+    Code* code = malloc(sizeof(Code*));
+    d.beginp =malloc(sizeof(List*));
+    d.beginp->val=0;
+    *cheat =0;
+    code = creationCodeInit(cheat,1);
+    d.beginp->mot = code;
+    d.beginp->nextp=NULL;
+    d.finalp=d.beginp;
+    while(i<256){
+        *cheat = i;
+        code = creationCodeInit(cheat,1);
+        ajouterElement(*code,NULL);
+        i++;
+    }
+    free(cheat);
+    return 1;
 }
 
-Code sequenceVersCode (Code sequence, int longueur){
-    return sequence;
+int afficherChaine(unsigned char* chaine,int taille){
+    int i=0;
+    while(i<taille){
+        printf("%c",*(chaine+i));
+        i++;
+    }
+    return 1;
+}
+int afficherListe(){
+    List* tmp = d.beginp;
+    while(tmp != NULL){
+        printf("%d ",tmp->val);
+        afficherChaine(tmp->mot->valeur,tmp->mot->taille);
+        printf("\n");
+        tmp = tmp->nextp;
+    }
+    return 1;
 }
 
 Code fusion (Code prefix, char* mono){
-    return prefix;
+    int i=0;
+    Code newCode;
+    if(mono==NULL)
+        return prefix;
+    newCode.taille=prefix.taille+1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
+    while(i<prefix.taille){
+        *(newCode.valeur+i)=*(prefix.valeur+i);
+        i++;
+    }
+    *(newCode.valeur+i)=*mono;
+    return newCode;
 }
-
-/*
- * Les fonctions d'affichage
- */
-
-
-int afficherCode(Code mot){
-    printf("%c\n",*mot.valeur);
+int compareCode(Code c1, Code c2){
+    int j;
+    if(c1.taille != c2.taille) 
+        return 0;
+    for(j=0;j<c1.taille;j++){
+        if(c1.valeur[j]!=c2.valeur[j]) return 0;
+    }
     return 1;
-}
-int afficherCell(Cellule cell){
-    printf("%c\n",*cell.mot.valeur);
-    printf("%d\n",cell.num);
-    printf("%d\n",cell.mot.taille);
-    return 1;
+
 }
 
-int afficherDic(){
-    Cellule* pointeur;
-    pointeur= d.beginp->nextp;
-    printf("%d\n",pointeur->num);
+int rechercher(Code prefix, char* mono, int *code){
+    List* pointeur = d.beginp;
+    Code c =fusion(prefix,mono);
+    while((pointeur!=NULL)&&(!compareCode(*pointeur->mot,c))){
+        pointeur=pointeur->nextp;
+    }
+    if(pointeur==NULL)
+        return 0;
+    else{
+        *code = pointeur->val;
+        return 1;
+    }
+}
+
+
+
+
+unsigned char *codeVersChaine (int code, int* longueur){
+    unsigned char* c =NULL;
+    List* pointeur = d.beginp;
+    while((pointeur!=NULL)&&(pointeur->val!=code)){
+        pointeur= pointeur->nextp;
+    }
+    if(pointeur==NULL)
+        return NULL;
+    else{
+        *longueur = pointeur->mot->taille;
+        c= pointeur->mot->valeur;
+        return c;
+    }
 }

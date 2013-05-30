@@ -1,83 +1,53 @@
-/**
-* Auteurs : Augustin & Jerome
-* Date : 28/05/2013
-* Projet : Compression
-* Version :
-**/
+/* 
+ * File:   list.h
+ * Author: augustin
+ *
+ * Created on 29 mai 2013, 13:40
+ */
 
-#ifndef DICTIONNAIRE_H
-#define DICTIONNAIRE_H
+#ifndef LIST_H
+#define	LIST_H
+#define TAILLE_TAB 10
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#endif
-
 typedef struct strCode {
-	char *valeur;
-  int taille;
+	unsigned char *valeur;
+        int taille; // longueur de la chaine de caractere
 } Code; 
 
-/*
- * @mot : chaine de caractere ascii + taille de la chaine
- * @param : num est le numero du mot 
- */
+typedef struct strucList{
+    struct strCode* mot;
+    int val;
+    struct strucList* nextp;
+}List;
 
-typedef struct strCellule{
-    Code mot;
-    int num;
-    struct Cellule* nextp;
-}Cellule;
-/*
- * @param : beginp : pointeur de debut de chaine
- * @param : finalp : pointeur vers la dernière cellule
- */
 typedef struct strDico{
-    Cellule* beginp;
-    Cellule* finalp;
+    struct strucList* beginp;
+    struct strucList* finalp;
 }Dico;
 
-static Dico d;
-/**
-*
-*
-**/
-Code creationMot(int i, int taille);
-Cellule creationCell(Code mot,int num);
+//static Dico d;
+Code* creationCodeInit(unsigned char* i,int taille);
+        
+int initialiser();
 
-void initialiser ();
 
-/**
-*ajoute l'élément s'il n'est pas présent ne fait rien sinon... retourne le numero du code que l'on souhaite ajouter
-*
-**/
+int afficherChaine(unsigned char* chaine,int taille);
+
+int afficherListe();
+int rechercher(Code prefix, char* mono, int *code);
 int ajouterElement (Code prefix, char* mono);
 
-/*
- * 0 si pas trouver 1 sinon modifie int *code pour permettre la recuperation du code et renvoi 1
- */
+int ajouterElement (Code prefix, char* mono);
+
 int rechercher(Code prefix, char* mono, int *code);
 
-/**
-*
-*
-**/
-char *codeVersChaine (Code code, int longueur);
+unsigned char *codeVersChaine (int code, int* longueur);
 
-/**
-*
-*
-**/
 Code sequenceVersCode (Code sequence, int longueur);
 
-/**
-*
-*
-**/
 Code fusion (Code prefix, char* mono);
-
-
-int afficherDic();
-int afficherCode(Code mot);
-int afficherCell(Cellule cell);
+#endif

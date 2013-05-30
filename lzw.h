@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #include "fichier.h"
-#include "list.h"
+#include "dictionnaire.h"
 
 #endif
 
