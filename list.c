@@ -124,10 +124,10 @@ int rechercher(Code prefix, char* mono, int *code){
 }
 
 
-unsigned char *codeVersChaine (Code code, int* longueur){
+unsigned char *codeVersChaine (int code, int* longueur){
     unsigned char* c =NULL;
     List* pointeur = d.beginp;
-    while((pointeur!=NULL)&&(!compareCode(code,*pointeur->mot))){
+    while((pointeur!=NULL)&&(pointeur->val!=code)){
         pointeur= pointeur->nextp;
     }
     if(pointeur==NULL)

@@ -14,8 +14,10 @@ int main(int argc, char **argv){
     c2 = creationCodeInit("ukt",3);
     
     initialiser();
+    
     ajouterElement(*c1,"t");
-    test = codeVersChaine(*c2,&l);
+    afficherListe();
+    test = codeVersChaine(256,&l);
     if(test==NULL)
         printf("va te pendre y a rien");
     else{
