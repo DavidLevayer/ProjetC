@@ -68,13 +68,13 @@ int ecrire(FILE* f, int v)
 	int restePrecedent,ajoutCourant;
 	int codeSpecial=0;
 
-	if (v & creerMasque(9) == FIN)
+	if ((v & creerMasque(9))-(FIN & creerMasque(9)) == 0)
 		codeSpecial = 1;
-	if (v & creerMasque(9) == INC)
+	if ((v & creerMasque(9))-(INC & creerMasque(9)) == 0)
 		codeSpecial = 2;
-	if (v & creerMasque(9) == RAZ)
+	if ((v & creerMasque(9))-(RAZ & creerMasque(9)) == 0)
 		codeSpecial = 3;	
-
+	
 	// On extrait les bits de poids faibles necessaires
 	buffer = buffer & creerMasque(nbBits);
 	// On constitue ensuite l'octet à écrire, en fonction :
@@ -125,6 +125,7 @@ int ecrire(FILE* f, int v)
 				nbReste++;
 			}
 			reste = reste & 0xFF;
+			
 			fwrite(&reste,1,1,f);
 			break;
 
