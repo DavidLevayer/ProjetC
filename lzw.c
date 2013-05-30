@@ -33,7 +33,7 @@ int compresser (FILE *fi, FILE *fo)
 	w.taille = 1;
 	while ((a = getc(fi)) != EOF)
 	{
-		
+		printf("valeur de a : %c (hexa: %x)\n",a,a);
 		if (rechercher(w,&a,&code))
 		{
 			w = fusion (w,&a); // w <--- w + a (avec taille++ inclu)
