@@ -27,7 +27,6 @@ int compresser (FILE *fi, FILE *fo)
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
-
 	for(i=1;i<nbOctets-1;i++)
 	{
 		a = fgetc(fi);
@@ -46,8 +45,51 @@ int compresser (FILE *fi, FILE *fo)
 		}
 		
 	}
+	rechercher(w,NULL,&code);
+	fprintf(fo,"%d-",code);
 
-	fprintf(fo,"%d",code);
-	
 	return 0;
 }
+
+
+/*
+int decompresser (FILE *fi, FILE *fo)
+{
+	Code w;
+	char a;
+	int longueur;
+	long nbOctets;
+	char* i;
+    
+	// Initialisation du dictionnaire
+	initialiser();
+	fscanf(fi,"%s-",&i);
+	
+	w.valeur = malloc (sizeof(char));
+	*w.valeur = CodeVersChaine(i,longueur);
+	w.taille = 1;
+	fprintf
+	while(getc(fi) != EOF)
+	{
+		if (rechercher(w,&a,&code))
+		{
+			w = fusion (w,&a); // w <--- w + a (avec taille++ inclu)
+			continue;
+		}
+		else
+		{
+			rechercher(w,NULL,&code);
+			fprintf(fo,"%s-",code);
+			ajouterElement(w,&a);
+			*w.valeur = a;
+			w.taille = 1;
+		}
+		
+	}
+	fprintf(fo,"%d",code);
+
+	return 0;
+}
+
+
+*/
