@@ -5,45 +5,80 @@
 
 static Dico d;
 
-Code* creationCodeInit(char i){
+Code* creationCodeInit(unsigned char* car,int taille){
+    int i=0;
     Code* mot = malloc(sizeof(Code*));
-    mot->valeur = malloc(sizeof(unsigned char));
-    *mot->valeur=i;
-    mot->longueur =1;
+    mot->valeur = malloc(taille*sizeof(unsigned char));
+    while(i<taille){
+        mot->valeur[i]=car[i];
+        i++;
+    }
+    mot->longueur =taille;
     return mot;
 }
 
 
 
-int ajoutEnQueue(int valeur){
+/*int ajoutEnQueue(int valeur){
+    unsigned char* cheat =NULL;
+    *cheat = valeur;
     List* nouvelElement = malloc(sizeof(List*));
     nouvelElement->val = valeur;
-    nouvelElement->mot = creationCodeInit(valeur);
+    nouvelElement->mot = creationCodeInit(cheat,1);
     nouvelElement->nextp = NULL;
     d.finalp->nextp=nouvelElement;
     d.finalp=d.finalp->nextp;
     return 1;
+}*/
+
+int ajouterElement (Code prefix, char* mono){
+    Code c = fusion(prefix,mono);
+    List* nouvelElement = malloc(sizeof(List*));
+    nouvelElement->val = d.finalp->val+1;
+    nouvelElement->mot = malloc(c.longueur*sizeof(unsigned char));
+    nouvelElement->mot->valeur = c.valeur;
+    nouvelElement->mot->longueur =c.longueur;
+    nouvelElement->nextp = NULL;
+    d.finalp->nextp=nouvelElement;
+    d.finalp=d.finalp->nextp;
+    return 0;
 }
 
 int initialiser(){
     int i=1;
+    unsigned char* cheat =malloc(sizeof(char));
+    Code* code = malloc(sizeof(Code*));
     d.beginp =malloc(sizeof(List*));
     d.beginp->val=0;
-    d.beginp->mot =creationCodeInit(0);
+    *cheat =0;
+    code = creationCodeInit(cheat,1);
+    d.beginp->mot = code;
     d.beginp->nextp=NULL;
     d.finalp=d.beginp;
     while(i<256){
-        ajoutEnQueue(i);
+        *cheat = i;
+        code = creationCodeInit(cheat,1);
+        ajouterElement(*code,NULL);
+        i++;
+    }
+    free(cheat);
+    return 1;
+}
+
+int afficherChaine(unsigned char* chaine,int taille){
+    int i=0;
+    while(i<taille){
+        printf("%c",*(chaine+i));
         i++;
     }
     return 1;
 }
-
-
 int afficherListe(){
     List* tmp = d.beginp;
     while(tmp != NULL){
-        printf("%c%c", *tmp->mot->valeur,*(tmp->mot->valeur+1));
+        printf("%d ",tmp->val);
+        afficherChaine(tmp->mot->valeur,tmp->mot->longueur);
+        printf("\n");
         tmp = tmp->nextp;
     }
     return 1;
@@ -88,6 +123,7 @@ int rechercher(Code prefix, char* mono, int *code){
     }
 }
 
+
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
     List* nouvelElement = malloc(sizeof(List*));
@@ -101,3 +137,19 @@ int ajouterElement (Code prefix, char* mono){
 return 0;
 }
 
+
+
+unsigned char *codeVersChaine (Code code, int* longueur){
+    unsigned char* c =NULL;
+    List* pointeur = d.beginp;
+    while((pointeur!=NULL)&&(!compareCode(code,*pointeur->mot))){
+        pointeur= pointeur->nextp;
+    }
+    if(pointeur==NULL)
+        return NULL;
+    else{
+        *longueur = pointeur->mot->longueur;
+        c= pointeur->mot->valeur;
+        return c;
+    }
+}
