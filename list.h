@@ -15,7 +15,7 @@
 
 typedef struct strCode {
 	unsigned char *valeur;
-        int taille; // longueur de la chaine de caractere
+        int longueur; // longueur de la chaine de caractere
 } Code; 
 
 typedef struct strucList{
