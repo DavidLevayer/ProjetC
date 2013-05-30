@@ -7,11 +7,17 @@
 
 #ifndef LIST_H
 #define	LIST_H
-#define TAILLE_TAB 10
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#define MAX_TAB 256
+#define TAILLE_TAB 10
+
+#define FIN 0x100
+#define INC 0x101
+#define RAZ 0x102
 
 typedef struct strCode {
 	unsigned char *valeur;
