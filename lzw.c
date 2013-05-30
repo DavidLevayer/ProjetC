@@ -18,9 +18,8 @@ void ecrireBinaire(FILE* fo, int v)
 int compresser (FILE *fi, FILE *fo)
 {
 	Code w;
-	int a;
+	char a;
 	int code;
-	long nbOctets;
 	
 	// On récupère la taille du fichier à compresser
 	//if (tailleFichier(fi, &nbOctets)!=0) return 1;
