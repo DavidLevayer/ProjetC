@@ -7,10 +7,6 @@
 
 #include "lzw.h"
 
-void ecrireBinaire(FILE* fo, int v)
-{
-	
-}
 /**
 *
 *
@@ -64,5 +60,71 @@ int compresser (FILE *fi, FILE *fo)
 **/
 int decompresser(FILE* fi, FILE* fo)
 {
+
+	int i,i2,lg,lg2;
+	char a;
+	Code w,w2;
+	unsigned char *buffer;
+	//unsigned char *buffer;
+	
+	// Initialisation du dictionnaire
+	initialiser();
+	
+	// Traitement du premier caractère
+	lire(fi,&i);
+	//printf("Valeur de i : %d (hexa: %x)\n",i,i);
+	a = codeVersChaine(i,&lg)[0];
+	//printf("Valeur de a : %c\n",a);
+	w.valeur = malloc(lg*sizeof(char));
+	*w.valeur = a;
+	w.taille = lg;
+	//printf("w : %s (taille: %d)\n",w.valeur,w.taille);
+	fwrite(w.valeur,1,1,fo);
+	
+	while (1)
+	{
+		
+		lire(fi,&i2);
+
+		if(i2==FIN) break;
+
+		//printf("\nValeur de i' : %d (hexa: %x)\n",i2,i2);
+		if (codeVersChaine(i2,&lg2)==NULL)
+		{
+			//printf("i' n'appartient pas à D\n");
+			buffer = codeVersChaine(i,&lg);
+			w2.valeur = malloc(lg*sizeof(char));
+			w2.valeur = buffer;
+			w2.taille = lg;
+			w2 = fusion(w2,&a);
+			//printf("w' : %s (taille: %d)\n",w2.valeur,w2.taille);
+		}
+		else
+		{	
+			//printf("i' appartient à D\n");
+			buffer = codeVersChaine(i2,&lg2);
+			w2.valeur = malloc(lg*sizeof(char));
+			w2.valeur = buffer;
+			w2.taille = lg2;
+			//printf("w' : %s (taille: %d)\n",w2.valeur,w2.taille);
+		}
+		
+		buffer = codeVersChaine(i,&lg);
+		w.valeur = malloc(lg*sizeof(char));
+		w.valeur = buffer;
+		w.taille = lg;
+		//printf("w : %s (taille: %d)\n",w.valeur,w.taille);
+
+		fwrite(w2.valeur,w2.taille,1,fo);
+
+		a = w2.valeur[0];
+		//printf("Valeur de a : %c\n",a);
+		//printf("Element ajouté au dico : %s%c\n",w.valeur,a);
+		ajouterElement(w,&a);
+		i = i2;
+		lg = lg2;
+		
+		
+	}
 	return 0;
 }
