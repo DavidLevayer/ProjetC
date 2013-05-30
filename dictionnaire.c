@@ -6,6 +6,13 @@
 static Dico d;
 int supprimerMemoire(List* listp);
 
+/*
+ * @param : car --> chaine de caractere que l'on souhaite voir intégré à une cellule Code
+ * @param : taille ---> longueur de la chaine de caractere car
+ * la fonction permet de créer une nouvelle cellule de type Code
+ * on peut avoir une chaine vide ---> permet d'ajouter les caracteres spéciaux lors de l'initialisation du dico 
+ */
+
 Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
     Code* mot = malloc(sizeof(Code*));
@@ -25,7 +32,12 @@ Code* creationCodeInit(unsigned char* car,int taille){
     }
     
 }
-
+/*
+ *cette fonction ajoute uniquement en queue
+ * il y a une incrémentation de la valeur associée au code grâce au pointeur finalp
+ * une fois que tous les parametres nécessaires à la création du nouvelle cellule sont en place, 
+ * on décale le pointeur finalp sur cette nouvelle cellule.
+ */
 
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
@@ -39,6 +51,14 @@ int ajouterElement (Code prefix, char* mono){
     d.finalp=d.finalp->nextp;
     return 0;
 }
+
+/*
+ * permet de créer pour la premiere fois un dico
+ * il contient les 255 caracteres ascii
+ * il y a ensuite ajout de 10 caractères spéciaux nécessaires (par exemple end of file de code Ox100 ie 256)
+ * Pour éviter de rendre priver des chaines de caracteres pour les caracteres spéciaux on met la chaine NULL lors de chaque 
+ * cellule crée.
+ */
 
 int initialiser(){
     int i=1;
@@ -146,7 +166,11 @@ int rechercher(Code prefix, char* mono, int *code){
 }
 
 
-
+/*
+ * @ code : valeur de la chaine de caractere que l'on recherche 
+ * exemple : on veut la chaine associée au code 65 on trouve donc A
+ * @ longueur : valeur fictive. Elle ne sert qu'à retourner la longueur de la chaine de caractere trouvée
+ */
 
 unsigned char *codeVersChaine (int code, int* longueur){
     unsigned char* c =NULL;

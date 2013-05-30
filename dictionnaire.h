@@ -19,16 +19,33 @@
 #define INC 0x101
 #define RAZ 0x102
 
+/*
+ * valeur : chaine de caractere en non signé --->permet d'avoir les 255 caractères ascii
+ * taille: longueur de la chaine de caractère
+ */
+
 typedef struct strCode {
 	unsigned char *valeur;
-        int taille; // longueur de la chaine de caractere
+        int taille;
 } Code; 
+
+/*
+ * mot : pointeur vers un Code
+ * val : valeur associé au Code
+ * nextp : pointeur vers la cellule suivante
+ */
 
 typedef struct strucList{
     struct strCode* mot;
     int val;
     struct strucList* nextp;
 }List;
+
+/*
+ * beginp : pointeur de debut de liste
+ * middlep : pointeur situé au 265 caracteres (dernier caracteres speciaux) ---> permet une ré-initialisation facile
+ * finalp : pointeur de fin de liste qui permet une insertion en queue en temps constant
+ */
 
 typedef struct strDico{
     struct strucList* beginp;
