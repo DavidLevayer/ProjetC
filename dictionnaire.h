@@ -32,6 +32,7 @@ typedef struct strucList{
 
 typedef struct strDico{
     struct strucList* beginp;
+    struct strucList* middlep;
     struct strucList* finalp;
 }Dico;
 
@@ -41,7 +42,7 @@ typedef struct strDico{
 Code* creationCodeInit(unsigned char* i,int taille);
         
 int initialiser();
-
+int supprimerDico();
 
 int afficherChaine(unsigned char* chaine,int taille);
 

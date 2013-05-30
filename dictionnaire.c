@@ -4,7 +4,7 @@
 #include "dictionnaire.h"
 
 static Dico d;
-void supprimerMemoire(List* listp);
+int supprimerMemoire(List* listp);
 
 Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
@@ -27,8 +27,6 @@ Code* creationCodeInit(unsigned char* car,int taille){
 }
 
 
-
-
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
     List* nouvelElement = malloc(sizeof(List*));
@@ -49,6 +47,8 @@ int initialiser(){
     
     // creation de la premiere cellule pour amorcer l'initialisation
     d.beginp =malloc(sizeof(List*));
+    d.finalp =malloc(sizeof(List*));
+    d.middlep=malloc(sizeof(List*));
     d.beginp->val=0;
     *cheat =0;
     code = creationCodeInit(cheat,1);
@@ -56,7 +56,7 @@ int initialiser(){
     d.beginp->nextp=NULL;
     d.finalp=d.beginp;
     
-    // creation des 254 cellule acceuillant les mono caracteres ascii
+    // creation des 254 cellules acceuillant les monos caracteres ascii
     while(i<256){
         *cheat = i;
         code = creationCodeInit(cheat,1);
@@ -71,8 +71,9 @@ int initialiser(){
         code = creationCodeInit(NULL,0);
         ajouterElement(*code,NULL);
         i++;
-
     }
+    d.middlep=d.finalp;
+    
     free(cheat);
     free(code);
     return 1;
@@ -163,7 +164,7 @@ unsigned char *codeVersChaine (int code, int* longueur){
 }
 
 
-void supprimerMemoire(List* listp)
+int supprimerMemoire(List* listp)
 {
 	List* save= malloc(sizeof(List*));
 	save=listp;
@@ -176,6 +177,22 @@ void supprimerMemoire(List* listp)
 	}
 	save->nextp=NULL;
 	d.finalp=save;
+	return 1;
 }
+
+int reinitialiser()
+{
+	supprimerMemoire(d.middlep);
+	return 1;
+}
+
+int supprimerDico()
+{
+	supprimerMemoire(d.beginp);
+	free(d.beginp);
+	d.beginp=d.finalp=d.middlep=NULL;
+	return 1;
+}
+
 
 
