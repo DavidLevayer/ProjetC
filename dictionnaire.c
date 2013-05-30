@@ -9,12 +9,20 @@ Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
     Code* mot = malloc(sizeof(Code*));
     mot->valeur = malloc(taille*sizeof(unsigned char));
-    while(i<taille){
-        mot->valeur[i]=car[i];
-        i++;
+    if(car==NULL){
+        mot->valeur=NULL;
+        mot->taille=0;
+        return mot;
     }
-    mot->taille =taille;
-    return mot;
+    else{
+        while(i<taille){
+            mot->valeur[i]=car[i];
+            i++;
+        }
+        mot->taille =taille;
+        return mot;
+    }
+    
 }
 
 
@@ -58,11 +66,12 @@ int initialiser(){
         ajouterElement(*code,NULL);
         i++;
     }
-    i=0;
-    while(i<10){
-        cheat2 = concat2Int(1,i);
-        code = creationCodeInit(cheat2,2);
+    while(i<266){
+        code = creationCodeInit(NULL,0);
         ajouterElement(*code,NULL);
+        //cheat2 = concat2Int(1,i);
+        //code = creationCodeInit(cheat2,2);
+        //ajouterElement(*code,NULL);
         i++;
     }
     free(cheat);
