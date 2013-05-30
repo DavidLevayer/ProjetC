@@ -23,6 +23,9 @@ int compresser (FILE *fi, FILE *fo)
 	// Initialisation du dictionnaire
 	initialiser();
 
+	// Initialisation des places disponibles dans le dictionnaire (pour un nombre de bits donné)
+	int placesDisponibles = 512 - 256 - 10;
+
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
@@ -39,6 +42,10 @@ int compresser (FILE *fi, FILE *fo)
 			rechercher(w,NULL,&code);
 			//fprintf(fo,"%d.",code);
 			ecrire(fo,code);
+
+			placesDisponibles--;
+			if (placesDisponibles==0) incNbBits();
+
 			ajouterElement(w,&a);
 			*w.valeur = a;
 			w.taille = 1;
@@ -87,6 +94,16 @@ int decompresser(FILE* fi, FILE* fo)
 		lire(fi,&i2);
 
 		if(i2==FIN) break;
+		if(i2==INC) 
+		{
+			incNbBits();
+			continue;
+		}
+		if(i2==RAZ) 
+		{
+			setNbBits(9);
+			continue;
+		}
 
 		//printf("\nValeur de i' : %d (hexa: %x)\n",i2,i2);
 		if (codeVersChaine(i2,&lg2)==NULL)

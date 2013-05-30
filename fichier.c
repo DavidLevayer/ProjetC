@@ -186,3 +186,15 @@ int creerMasque (int nbUn)
 	}
 	return res;
 }
+
+int setNbBits (int valeur)
+{
+	nbBits = valeur;
+	return 0;
+}
+
+int incNbBits ()
+{
+	nbBits++;
+	return 0;
+}
