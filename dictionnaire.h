@@ -27,7 +27,7 @@ typedef struct strCode {
 typedef struct strDico{
     Code* table;
     int taille;
-	int indice;
+    int indice;
 }Dico;
 /**
 *
