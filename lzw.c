@@ -19,11 +19,11 @@ int compresser (FILE *fi, FILE *fo)
 {
 	Code w;
 	char a;
-	int i,code;
+	int code;
 	long nbOctets;
 	
 	// On récupère la taille du fichier à compresser
-	if (tailleFichier(fi, &nbOctets)!=0) return 1;
+	//if (tailleFichier(fi, &nbOctets)!=0) return 1;
 
 	// Initialisation du dictionnaire
 	initialiser();
