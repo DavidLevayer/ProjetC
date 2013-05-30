@@ -20,7 +20,6 @@ int compresser (FILE *fi, FILE *fo)
 	Code w;
 	char a;
 	int code;
-	long nbOctets;
 	
 	// On récupère la taille du fichier à compresser
 	//if (tailleFichier(fi, &nbOctets)!=0) return 1;
