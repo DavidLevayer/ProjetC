@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "dictionnaire.h"
 
 #endif
 
@@ -31,4 +32,11 @@ int fermer (FILE* fichier);
 *
 **/
 int tailleFichier(FILE* f, long* taille);
+
+/**
+*
+*
+**/
+int ecrire(FILE* f, int v);
+int creerMasque (int nbUn);
 

@@ -58,11 +58,6 @@ int main(int argc, char **argv)
 		compresser(fi,fo);
 	else if (oper==2)
 		printf("Decompression(fi,fo)\n");
-
-
-    else if (oper==2)
-        printf("Decompression(fi,fo)\n");
-
    
     if (entree==1)
         fermer(fi);
