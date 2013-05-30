@@ -18,7 +18,7 @@ void ecrireBinaire(FILE* fo, int v)
 int compresser (FILE *fi, FILE *fo)
 {
 	Code w;
-	int a;
+	char a;
 	int code;
 	long nbOctets;
 	
