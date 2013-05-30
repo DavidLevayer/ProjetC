@@ -13,7 +13,7 @@ Code* creationCodeInit(unsigned char* car,int taille){
         mot->valeur[i]=car[i];
         i++;
     }
-    mot->longueur =taille;
+    mot->taille =taille;
     return mot;
 }
 
@@ -35,9 +35,9 @@ int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
     List* nouvelElement = malloc(sizeof(List*));
     nouvelElement->val = d.finalp->val+1;
-    nouvelElement->mot = malloc(c.longueur*sizeof(unsigned char));
+    nouvelElement->mot = malloc(c.taille*sizeof(unsigned char));
     nouvelElement->mot->valeur = c.valeur;
-    nouvelElement->mot->longueur =c.longueur;
+    nouvelElement->mot->taille =c.taille;
     nouvelElement->nextp = NULL;
     d.finalp->nextp=nouvelElement;
     d.finalp=d.finalp->nextp;
@@ -77,7 +77,7 @@ int afficherListe(){
     List* tmp = d.beginp;
     while(tmp != NULL){
         printf("%d ",tmp->val);
-        afficherChaine(tmp->mot->valeur,tmp->mot->longueur);
+        afficherChaine(tmp->mot->valeur,tmp->mot->taille);
         printf("\n");
         tmp = tmp->nextp;
     }
@@ -89,9 +89,9 @@ Code fusion (Code prefix, char* mono){
     Code newCode;
     if(mono==NULL)
         return prefix;
-    newCode.longueur=prefix.longueur+1;
-    newCode.valeur=malloc(newCode.longueur*sizeof(unsigned int));
-    while(i<prefix.longueur){
+    newCode.taille=prefix.taille+1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
+    while(i<prefix.taille){
         *(newCode.valeur+i)=*(prefix.valeur+i);
         i++;
     }
@@ -100,9 +100,9 @@ Code fusion (Code prefix, char* mono){
 }
 int compareCode(Code c1, Code c2){
     int j;
-    if(c1.longueur != c2.longueur) 
+    if(c1.taille != c2.taille) 
         return 0;
-    for(j=0;j<c1.longueur;j++){
+    for(j=0;j<c1.taille;j++){
         if(c1.valeur[j]!=c2.valeur[j]) return 0;
     }
     return 1;
@@ -124,20 +124,6 @@ int rechercher(Code prefix, char* mono, int *code){
 }
 
 
-<<<<<<< HEAD
-int ajouterElement (Code prefix, char* mono){
-    Code c = fusion(prefix,mono);
-    List* nouvelElement = malloc(sizeof(List*));
-    nouvelElement->val = d.finalp->val+1;
-    nouvelElement->mot = malloc(c.longueur*sizeof(unsigned char));
-    nouvelElement->mot->valeur = c.valeur;
-    nouvelElement->mot->longueur =c.longueur;
-    nouvelElement->nextp = NULL;
-    d.finalp->nextp=nouvelElement;
-    d.finalp=d.finalp->nextp;
-return 0;
-}
-
 
 
 unsigned char *codeVersChaine (int code, int* longueur){
@@ -149,7 +135,7 @@ unsigned char *codeVersChaine (int code, int* longueur){
     if(pointeur==NULL)
         return NULL;
     else{
-        *longueur = pointeur->mot->longueur;
+        *longueur = pointeur->mot->taille;
         c= pointeur->mot->valeur;
         return c;
     }
