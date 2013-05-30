@@ -19,17 +19,6 @@ Code* creationCodeInit(unsigned char* car,int taille){
 
 
 
-/*int ajoutEnQueue(int valeur){
-    unsigned char* cheat =NULL;
-    *cheat = valeur;
-    List* nouvelElement = malloc(sizeof(List*));
-    nouvelElement->val = valeur;
-    nouvelElement->mot = creationCodeInit(cheat,1);
-    nouvelElement->nextp = NULL;
-    d.finalp->nextp=nouvelElement;
-    d.finalp=d.finalp->nextp;
-    return 1;
-}*/
 
 int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
@@ -44,9 +33,17 @@ int ajouterElement (Code prefix, char* mono){
     return 0;
 }
 
+unsigned char* concat2Int(int a,int b){
+    unsigned char* car = malloc(2*sizeof(char));
+    *car=a;
+    *(car+1)=b;
+    return car;
+}
+
 int initialiser(){
     int i=1;
     unsigned char* cheat =malloc(sizeof(char));
+    unsigned char* cheat2 = NULL;
     Code* code = malloc(sizeof(Code*));
     d.beginp =malloc(sizeof(List*));
     d.beginp->val=0;
@@ -58,6 +55,13 @@ int initialiser(){
     while(i<256){
         *cheat = i;
         code = creationCodeInit(cheat,1);
+        ajouterElement(*code,NULL);
+        i++;
+    }
+    i=0;
+    while(i<10){
+        cheat2 = concat2Int(1,i);
+        code = creationCodeInit(cheat2,2);
         ajouterElement(*code,NULL);
         i++;
     }
