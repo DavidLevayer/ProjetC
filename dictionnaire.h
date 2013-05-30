@@ -33,8 +33,9 @@ typedef struct strucList{
 typedef struct strDico{
     struct strucList* beginp;
     struct strucList* finalp;
-
 }Dico;
+
+
 
 //static Dico d;
 Code* creationCodeInit(unsigned char* i,int taille);

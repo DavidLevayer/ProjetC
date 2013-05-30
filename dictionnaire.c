@@ -4,6 +4,7 @@
 #include "dictionnaire.h"
 
 static Dico d;
+void supprimerMemoire(List* listp);
 
 Code* creationCodeInit(unsigned char* car,int taille){
     int i=0;
@@ -62,17 +63,22 @@ int initialiser(){
         ajouterElement(*code,NULL);
         i++;
     }
+
     
     // reservation de 10 cellule pour les caractères spéciaux
+
     while(i<266){
         code = creationCodeInit(NULL,0);
         ajouterElement(*code,NULL);
         i++;
+
     }
     free(cheat);
     free(code);
     return 1;
 }
+
+
 
 int afficherChaine(unsigned char* chaine,int taille){
     int i=0;
@@ -92,6 +98,12 @@ int afficherListe(){
     }
     return 1;
 }
+
+
+/**
+*
+*
+**/
 
 Code fusion (Code prefix, char* mono){
     int i=0;
@@ -149,3 +161,21 @@ unsigned char *codeVersChaine (int code, int* longueur){
         return c;
     }
 }
+
+
+void supprimerMemoire(List* listp)
+{
+	List* save= malloc(sizeof(List*));
+	save=listp;
+	listp=listp->nextp;
+	while(listp!=NULL)
+	{
+		List* aSupprimer = listp;
+		listp=aSupprimer->nextp;
+		free(aSupprimer);
+	}
+	save->nextp=NULL;
+	d.finalp=save;
+}
+
+

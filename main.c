@@ -6,7 +6,6 @@
 
 int main(int argc, char **argv)
 {
-
     int i;
     int oper = 0;
     int sortie = 0;
@@ -62,10 +61,10 @@ int main(int argc, char **argv)
 
 
 
-	if (oper==1){
+
+	if (oper==1)
 		compresser(fi,fo);
-                afficherListe();
-        }
+		
 	else if (oper==2)
 		printf("Decompression(fi,fo)\n");
    
@@ -73,7 +72,7 @@ int main(int argc, char **argv)
         fermer(fi);
     if (sortie==1)
         fermer(fo);
-
+		
 
     return 0;
 }
