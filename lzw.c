@@ -7,6 +7,10 @@
 
 #include "lzw.h"
 
+void ecrireBinaire(FILE* fo, int v)
+{
+	
+}
 /**
 *
 *
@@ -39,15 +43,28 @@ int compresser (FILE *fi, FILE *fo)
 		else
 		{
 			rechercher(w,NULL,&code);
-			fprintf(fo,"%d-",code);
+			//fprintf(fo,"%d.",code);
+			ecrire(fo,code);
 			ajouterElement(w,&a);
 			*w.valeur = a;
 			w.taille = 1;
 		}
 		
 	}
-
-	fprintf(fo,"%d",code);
+	rechercher(w,NULL,&code);
+	//fprintf(fo,"%d",code);
+	ecrire(fo,code);
 	
+	// Fin de fichier
+	ecrire(fo,FIN);
+	return 0;
+}
+
+/**
+*
+*
+**/
+int decompresser(FILE* fi, FILE* fo)
+{
 	return 0;
 }
