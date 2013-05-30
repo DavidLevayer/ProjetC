@@ -19,11 +19,11 @@ int compresser (FILE *fi, FILE *fo)
 {
 	Code w;
 	char a;
-	int i,code;
+	int code;
 	long nbOctets;
 	
 	// On récupère la taille du fichier à compresser
-	if (tailleFichier(fi, &nbOctets)!=0) return 1;
+	//if (tailleFichier(fi, &nbOctets)!=0) return 1;
 
 	// Initialisation du dictionnaire
 	initialiser();
@@ -31,9 +31,9 @@ int compresser (FILE *fi, FILE *fo)
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
-	for(i=1;i<nbOctets-1;i++)
+	while ((a = getc(fi)) != EOF)
 	{
-		a = fgetc(fi);
+		
 		if (rechercher(w,&a,&code))
 		{
 			w = fusion (w,&a); // w <--- w + a (avec taille++ inclu)

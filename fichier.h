@@ -40,3 +40,9 @@ int tailleFichier(FILE* f, long* taille);
 int ecrire(FILE* f, int v);
 int creerMasque (int nbUn);
 
+/**
+*
+*
+**/
+int lire (FILE* f, int* value);
+

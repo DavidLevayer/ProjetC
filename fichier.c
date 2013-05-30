@@ -67,14 +67,14 @@ int ecrire(FILE* f, int v)
 
 	int restePrecedent,ajoutCourant;
 	int codeSpecial=0;
-
+	
 	if ((v & creerMasque(9))-(FIN & creerMasque(9)) == 0)
 		codeSpecial = 1;
 	if ((v & creerMasque(9))-(INC & creerMasque(9)) == 0)
 		codeSpecial = 2;
 	if ((v & creerMasque(9))-(RAZ & creerMasque(9)) == 0)
 		codeSpecial = 3;	
-	
+
 	// On extrait les bits de poids faibles necessaires
 	buffer = buffer & creerMasque(nbBits);
 	// On constitue ensuite l'octet à écrire, en fonction :
@@ -125,7 +125,6 @@ int ecrire(FILE* f, int v)
 				nbReste++;
 			}
 			reste = reste & 0xFF;
-			
 			fwrite(&reste,1,1,f);
 			break;
 
@@ -142,6 +141,35 @@ int ecrire(FILE* f, int v)
 	return 0;
 
 }
+
+int lire (FILE* f, int* value)
+{
+	unsigned int v,buffer;	
+	unsigned int aLire,restePrecedent,ajoutCourant;
+
+	while(nbReste<nbBits)
+	{
+		fread(&buffer,1,1,f);
+		reste = (reste << 8) | (buffer & 0xFF);
+		nbReste = nbReste + 8;
+	}
+	
+	aLire = reste >> (nbReste-nbBits);
+	*value = aLire;
+	/*
+	printf("Valeur du reste : %d (hexa: %x)\n",reste,reste);
+	printf("Valeur de nbReste : %d\n",nbReste);
+	printf("Valeur aLire : %d (hexa: %x)\n",aLire,aLire);
+	*/
+	reste = reste & creerMasque(nbReste-nbBits);
+	nbReste = nbReste - nbBits;
+	/*
+	printf("Valeur du nouveau reste : %d (hexa: %x)\n",reste,reste);
+	printf("Valeur de nouveau nbReste : %d\n",nbReste);
+	*/
+	return 0;
+}
+
 
 int creerMasque (int nbUn)
 {
