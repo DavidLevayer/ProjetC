@@ -138,6 +138,7 @@ Code fusion (Code prefix, char* mono){
     *(newCode.valeur+i)=*mono;
     return newCode;
 }
+
 int compareCode(Code c1, Code c2){
     int j;
     if(c1.taille != c2.taille) 

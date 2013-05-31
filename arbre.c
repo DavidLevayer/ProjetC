@@ -39,7 +39,7 @@ Arbre* creationFeuille(){
     Arbre* feuille = malloc(sizeof(Arbre*));
     feuille->filsd=NULL;
     feuille->filsg=NULL;
-    feuille->val = NULL;
+    feuille->val = -1;
     feuille->mot = creationCodeInit(NULL,0);
     return feuille;
 }
@@ -61,4 +61,43 @@ int insertionGauche(Code prefix){
     d.finalp->filsg = nouvelElement;
     d.finalp=d.finalp->filsg;
     return 0;
+}
+
+int initialiser(){
+    int i=1;
+    unsigned char* cheat =malloc(sizeof(char));
+    Code* code = malloc(sizeof(Code*));
+    
+    // creation de la premiere cellule pour amorcer l'initialisation
+    d.beginp =malloc(sizeof(Arbre*));
+    d.finalp =malloc(sizeof(Arbre*));
+    cpt =0;
+    d.beginp->val = cpt;
+    *cheat =0;
+    code = creationCodeInit(cheat,1);
+    d.beginp->mot = code;
+    d.beginp->filsd = creationFeuille();
+    d.beginp->filsg =NULL;
+    d.finalp=d.beginp;
+    
+    // creation des 254 cellules acceuillant les monos caracteres ascii
+    while(i<256){
+        *cheat = i;
+        code = creationCodeInit(cheat,1);
+        insertionGauche(*code);
+        i++;
+    }
+
+    
+    // reservation de 10 cellule pour les caractères spéciaux
+
+    while(i<266){
+        code = creationCodeInit(NULL,0);
+        insertionGauche(*code);
+        i++;
+    }
+    
+    free(cheat);
+    free(code);
+    return 1;
 }
