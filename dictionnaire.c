@@ -4,8 +4,6 @@
 #include "dictionnaire.h"
 
 static Dico d;
-int supprimerMemoire(List* listp);
-
 /*
  * @param : car --> chaine de caractere que l'on souhaite voir intégré à une cellule Code
  * @param : taille ---> longueur de la chaine de caractere car

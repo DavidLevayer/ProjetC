@@ -1,1 +1,27 @@
-coucou cousin
+Introduction
+For introduction this topic, I would like to talk to you about the surgeries before the introduction of the robot. 
+Not having a robot, means that it was necessary to put notes like measures on the radiography. Measures that can have some mistakes. Moreover, when there is a data transfer of these measures, it’s possible that there are transfer mistakes.
+So the introduction of the robotic aims to remove up all of these mistakes maximum. To understand correctly how can a robot get rid of these errors and improve the surgeries operations, we chose to concentrate our study on the Da Vinci robot. 
+History and number.
+The development of the robotic in the surgery began since a long time. Thanks to this timeline, you can see that it started in 1595 with the creation of the microscope. These first robots helped to identify viruses and bacterias. Three centuries later, the discovery of x-rays by Wilhelm Röntgen, allows to invent the medical imaging with scanner and radiology discovered.
+Finally, we arrived to 21st century where two robots appear: the Cyberknife and the Da Vinci. The Cyberknife is a robot who allows to treat the tumors in the all body.
+The development of these both robots is similar. The both robots are built in the 90s and recognize a similar commercial development. That is to say that they are first marketed in the United States and then in Europe.
+These two machines are the pillars of computer-assisted surgery. And these are almost the only two on the market of robotic surgery.
+In 2011, 1750 copies of the da vinci are active around the world, including 65 in France and more 1000 in the United States.
+It is also present here in Grenoble at the clinic and Belledone since 2006.
+Comme vous pouvez le constater, la démocratisation de ces robots est très lente. Pourquoi cela met il autant de temps ? Qu’est ce qui pourrait justifier que quasiment seul deux robots sont présents sur le marché de la robotique ? 
+Ce sont des questions auxquelles nous allons répondre dans la partie suivante où nous verrons cette fois avec précision les spécifications du robot Da vinci.
+2nd part: 
+The second part is manipulated by the surgeon. It is mainly made of three parts. One of these concerns the eyes. The surgeon put his head and chin rests here. His hands are placed on two joysticks that control the robot arm.
+He disposes of four pedals for feet, enable zoom (to x 15), advance instruments in the body, adjust sharpness or reposition himself in a better comfortable position
+And finally, we note that the surgeon sits on a chair unlike when he does its job without a robot. What is more comfortable and less tiring.
+Surgery
+We find the Da Vinci robot in just three areas of surgery: Urology, Gynecology and digestive surgery. And in every field of surgery, the robot has made ​​very specific operations. For example, in gynecology, this machine performs lymphadenectomy operations that are a lymph node removal. However, because of the delicacy of the instruments it uses, it can in no case do operations that would require extracting the heart.
+Question/Answer
+Before concluding this study, I would like to tell you about our visit to the clinic Belledone. Having been approached the surgeons, we asked them some questions that you may also ask. 
+For example, maybe you're wondering if it takes special training to manipulate this machine. Well, you're absolutely right, we must actually undergo special training. However, the operation of this machine is very simple, especially for the generation x who habituated to manipulate the joystick of the console like xbox. Therefore additional training in the use of these machines is not therefore  an obstacle to its development.
+Finally we also asked whether the use of a robot will disturb the patient. The answer is no. On the contrary, patients prefer to be operating via the robot. Moreover, the robot is only there to increase the precision of gestures doctor and correct his mistakes. It is always the surgeon who operate, not the robot.
+Conclusion:
+As a conclusion, The Da Vinci robot is a pillar of robotic surgery. Despite of its high cost it introduced in the medical field a new way to operate on patients more accurately and more safe.
+But this robot is quite old. I repeat it again; this robot has more than 10 years. In a decade, nanotechnology has evolved. This means that the robots of the future will be, hopefully, smaller. This idea is supported by the Ares (Assembling Reconfigurable Endoluminal Surgical System) project is a modular robot. It means that a complex robot could assemble itself from small modules that can be introduced into the body through natural orifices such as the mouth or the nose, for example. So if you want to operate on the stomach, the patient swallows the robot, modules by modules.
+Hopefully within the next twenty years, all operations will be performed using robots which could be introduced into the patient's body.
