@@ -125,12 +125,35 @@ int afficherListe(){
 *
 *
 **/
-
 Code fusion (Code prefix, char* mono){
     int i=0;
     Code newCode;
     if(mono==NULL)
         return prefix;
+    newCode.taille=prefix.taille+1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
+    while(i<prefix.taille){
+        *(newCode.valeur+i)=*(prefix.valeur+i);
+        i++;
+    }
+    *(newCode.valeur+i)=*mono;
+    return newCode;
+}
+
+/*Code fusion (Code prefix, char* mono){
+    int i=0;
+    Code newCode;
+    if(mono==NULL){
+        if(prefix.valeur==NULL){
+            newCode.taille=2;
+            newCode.valeur = malloc(2*sizeof(unsigned char));
+            *newCode.valeur = 0;
+            *(newCode.valeur+1) = 0;
+            return newCode;
+        }
+        else
+            return prefix;
+    }
     else{
         if(prefix.valeur==NULL){
             newCode.taille=2;
@@ -150,6 +173,9 @@ Code fusion (Code prefix, char* mono){
         return newCode;
     }
 }
+ 
+ */
+
 int compareCode(Code c1, Code c2){
     int j;
     if(c1.taille != c2.taille) 
@@ -188,8 +214,11 @@ unsigned char *codeVersChaine (int code, int* longueur){
     while((pointeur!=NULL)&&(pointeur->val!=code)){
         pointeur= pointeur->nextp;
     }
-    if(pointeur==NULL)
+    if(pointeur==NULL){
+        *longueur = 0;
         return NULL;
+    }
+        
     else{
         *longueur = pointeur->mot->taille;
         c= pointeur->mot->valeur;
