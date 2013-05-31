@@ -131,14 +131,24 @@ Code fusion (Code prefix, char* mono){
     Code newCode;
     if(mono==NULL)
         return prefix;
-    newCode.taille=prefix.taille+1;
-    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
-    while(i<prefix.taille){
-        *(newCode.valeur+i)=*(prefix.valeur+i);
-        i++;
+    else{
+        if(prefix.valeur==NULL){
+            newCode.taille=2;
+            newCode.valeur = malloc(2*sizeof(unsigned char));
+            *newCode.valeur = 0;
+            *(newCode.valeur+1) = *mono;
+        }
+        else{
+            newCode.taille=prefix.taille+1;
+            newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
+            while(i<prefix.taille){
+                *(newCode.valeur+i)=*(prefix.valeur+i);
+                i++;
+            }
+        *(newCode.valeur+i)=*mono;
+        }
+        return newCode;
     }
-    *(newCode.valeur+i)=*mono;
-    return newCode;
 }
 int compareCode(Code c1, Code c2){
     int j;
