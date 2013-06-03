@@ -40,6 +40,7 @@ Arbre* creationFeuille(){
     feuille->filsd=NULL;
     feuille->filsg=NULL;
     feuille->val = -1;
+    feuille->mot = malloc(sizeof(Code*));
     feuille->mot = creationCodeInit(NULL,0);
     return feuille;
 }
@@ -99,5 +100,10 @@ int initialiser(){
     
     free(cheat);
     free(code);
+    return 1;
+}
+
+
+int afficherArbre(){
     return 1;
 }

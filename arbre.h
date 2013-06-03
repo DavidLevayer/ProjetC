@@ -38,5 +38,8 @@ typedef struct strDico{
     struct strArbre* finalp;
 }Dico;
 
+Arbre* creationFeuille();
+
+int initialiser();
 #endif	/* ARBRE_H */
 

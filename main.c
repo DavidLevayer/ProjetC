@@ -4,5 +4,9 @@
 #include "arbre.h"
 
 int main(int argc, char **argv){
-      return 0;
+    Arbre* test =malloc(sizeof(Arbre*));
+    test = creationFeuille();
+    
+    //initialiser();
+    return 0;
 }
