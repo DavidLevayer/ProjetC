@@ -14,16 +14,20 @@
 #include "fichier.h"
 #include "dictionnaire.h"
 
-#endif
-
-/**
-*
-*
-**/
+/*
+ * Compresse le fichier fi dans le fichier fo avec l'algorithme LZW
+ * @param fi le pointeur du fichier d'entrée
+ * @param fo le pointeur du fichier de sortie
+ * @return 0 si OK
+ */
 int compresser (FILE *fi, FILE *fo);
 
-/**
-*
-*
-**/
+/*
+ * Decompresse le fichier fi dans le fichier fo avec l'algorithme LZW
+ * @param fi le pointeur du fichier d'entrée
+ * @param fo le pointeur du fichier de sortie
+ * @return 0 si OK
+ */
 int decompresser (FILE *fi, FILE *fo);
+
+#endif

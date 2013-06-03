@@ -1,11 +1,20 @@
+/*
+ * Auteurs : Jérôme Barbier, Augustin Husson, David Levayer, Mehdi NS
+ * Date : 03/06/2013
+ * Projet : Compression de fichiers
+ * Version : 1.0
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "fichier.h"
 
-/**
-*
-* mode = 0 --< fichier existe "r" sinon "w"
-**/
+/*
+ * Ouvre le fichier dont le nom est passé en paramètre avec le mode souhaité
+ * @param nomFichier le nom du fichier à ouvrir
+ * @param mode le mode d'ouverture : 0 pour lecture, 1 pour écriture
+ * @return le pointeur de fichier
+ */
 FILE* ouvrir (char* nomFichier, int mode)
 {
 	FILE* f = NULL;
@@ -13,9 +22,7 @@ FILE* ouvrir (char* nomFichier, int mode)
 	else f = fopen(nomFichier, "w");
 	
 	if (f != NULL)
-  {
   	return f;
-  }
 	else
 	{
 		printf("Erreur lors de l'ouverture du fichier %s\n",nomFichier);
@@ -25,20 +32,27 @@ FILE* ouvrir (char* nomFichier, int mode)
 
 
 
-/**
-*
-*
-**/
+/*
+ * Ferme le fichier
+ * @param fichier le pointeur de fichier à fermer
+ * @return 0 si la fermeture s'est bien déroulée, != 0 sinon
+ */
 int fermer (FILE* fichier)
 {
-	fclose(fichier);
+	return fclose(fichier);
 }
 
 
-static int reste = 0;
-static int nbReste = 0;
-static int nbBits = 9;
+static int reste = 0; // représente les bits restants (à ajouter au prochain code...)
+static int nbReste = 0; // taille (en bit) du reste
+static int nbBits = 9; // taille (en bit) sur laquelle est codée tout caractère (variable au cours du temps)
 
+/*
+ * Ecrit (en binaire) l'entier v dans le fichier pointé par f
+ * @param f le pointeur sur le fichier (le fichier doit etre ouvert !)
+ * @param v l'entier à écrire
+ * @return 0 si OK
+ */
 int ecrire(FILE* f, int v)
 {
 	int buffer = v;
@@ -47,8 +61,6 @@ int ecrire(FILE* f, int v)
 	unsigned int restePrecedent,ajoutCourant;
 	unsigned int codeSpecial=0;
 	
-		
-	printf("NBRESTE %d ",nbReste);
 	// On extrait les bits de poids faibles necessaires
 	buffer = buffer & creerMasque(nbBits);
 
@@ -56,24 +68,13 @@ int ecrire(FILE* f, int v)
 	// 	 - d'un eventuel reste précédent
 	//   - des bits de poids forts extraits ci-dessus
 	restePrecedent = (reste << (8-nbReste)) & 0xFF;
-	//ajoutCourant = buffer & (~0>>(sizeof(int)*8-(nbBits+nbReste-8)));
 	ajoutCourant = (buffer >> (nbReste+nbBits-8)) & 0xFF;
+
 	aEcrire = (restePrecedent | ajoutCourant);
+
 	// On sauvegarde les bits restants (écriture future)
 	nbReste = (nbReste + nbBits - 8);
 	reste = buffer & creerMasque(nbReste);
-
-	
-	printf("DEBUG ###### ");
-	printf("nbBits : %d ",nbBits);
-	printf("Buffer : (hexa : %x (v: %x)) ",buffer,v);
-	printf("restePrecedent :  (hexa : %x de taille %d) ",restePrecedent,nbReste);
-	printf("ajoutCourant :  (hexa : %x) ",ajoutCourant);
-	printf("aEcrire :  (hexa : %x) ",aEcrire);
-	printf("Reste :  (hexa : %x) ",reste);
-	printf("nbReste : %d ",nbReste);
-	printf("############ ");
-	
 
 	fwrite(&aEcrire,1,1,f);
 
@@ -87,11 +88,12 @@ int ecrire(FILE* f, int v)
 		nbReste = nbReste - 8;
 	}
 
+	// Traitement spécifique si l'entier symbolise la fin du fichier
+	// On complète avec des 0 pour terminer l'octet restant (et on l'écrit).
 	if (v==FIN)
 	{
 			while(nbReste < 8)
 			{
-				printf("CACCCAAAAAAAAAAAAAAAA %d %d &&&&&&&&",v,FIN);
 				reste = reste << 1;
 				nbReste++;
 			}
@@ -99,16 +101,23 @@ int ecrire(FILE* f, int v)
 
 			fwrite(&reste,1,1,f);
 	}
-	printf("=== NB RESTE %d ===",nbReste);
+	
 	return 0;
 
 }
 
+/*
+ * Lit (en binaire) la valeur courante présente dans le fichier pointé par f
+ * @param f le pointeur sur le fichier (le fichier doit etre ouvert !)
+ * @param value la valeur de l'entier lu
+ * @return 0 si OK
+ */
 int lire (FILE* f, int* value)
 {
 	unsigned int buffer;	
 	unsigned int aLire;
-	
+
+	// On complète le reste courant jusqu'à avoir un code complet (ou plus)
 	while(nbReste<nbBits)
 	{
 		fread(&buffer,1,1,f);
@@ -116,22 +125,13 @@ int lire (FILE* f, int* value)
 		nbReste = nbReste + 8;
 	}
 	
+	// On extrait le code courant
 	aLire = reste >> (nbReste-nbBits);
 	*value = aLire;
 
-	/*
-	printf("Valeur du reste : %d (hexa: %x)\n",reste,reste);
-	printf("Valeur de nbReste : %d\n",nbReste);
-	printf("Valeur aLire : %d (hexa: %x)\n",aLire,aLire);
-	*/
-
+	// On sauvegarde le reste pour la prochaine lecture
 	reste = reste & creerMasque(nbReste-nbBits);
 	nbReste = nbReste - nbBits;
-
-	/*
-	printf("Valeur du nouveau reste : %d (hexa: %x)\n",reste,reste);
-	printf("Valeur de nouveau nbReste : %d\n",nbReste);
-	*/
 
 	return 0;
 }
@@ -148,20 +148,31 @@ int creerMasque (int nbUn)
 	return res;
 }
 
+/*
+ * Modifie la valeur de nbBits
+ * @param valeur la nouvelle valeur de nbBits
+ * @return 0 si OK
+ */
 int setNbBits (int valeur)
 {
 	nbBits = valeur;
-	//printf("Nouvelle valeur de nbBits : %d\n",nbBits);
 	return 0;
 }
 
+/*
+ * Incrémente nbBits
+ * @return 0 si OK
+ */
 int incNbBits ()
 {
 	nbBits++;
-	//printf("Nouvelle valeur de nbBits : %d\n",nbBits);
 	return 0;
 }
 
+/*
+ * Récupère la valeur de nbBits
+ * @return nbBits
+ */
 int getNbBits ()
 {
 	return nbBits;

@@ -18,6 +18,9 @@
 #define FIN 0x100
 #define INC 0x101
 #define RAZ 0x102
+#define NB_BIT_INIT 9
+#define RESERVE 10
+#define TAILLE_BIT_MAX 20
 
 /*
  * valeur : chaine de caractere en non signé --->permet d'avoir les 255 caractères ascii
@@ -59,6 +62,7 @@ typedef struct strDico{
 Code* creationCodeInit(unsigned char* i,int taille);
         
 int initialiser();
+int reinitialiser();
 int supprimerDico();
 
 int afficherChaine(unsigned char* chaine,int taille);
