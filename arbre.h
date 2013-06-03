@@ -49,5 +49,7 @@ int initialiser();
 int ajouterElement (Code prefix,unsigned char* mono);
 
 int afficherArbre();
+
+int afficherFuck(Code prefix);
 #endif	/* ARBRE_H */
 

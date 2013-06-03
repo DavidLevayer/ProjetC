@@ -8,6 +8,6 @@ int main(int argc, char **argv){
     c = creationCodeInit("ab",2);
     initialiser();
     ajouterElement(*c,NULL);
-    //afficherArbre();
+    afficherFuck(*c);
     return 0;
 }
