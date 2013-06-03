@@ -4,7 +4,10 @@
 #include "arbre.h"
 
 int main(int argc, char **argv){
+    Code * c = (Code*) malloc(sizeof(Code));
+    c = creationCodeInit("ab",2);
     initialiser();
-    afficherArbre();
+    ajouterElement(*c,NULL);
+    //afficherArbre();
     return 0;
 }

@@ -32,15 +32,21 @@ typedef struct strArbre{
     struct strArbre* filsg;
     struct strArbre* filsd;
 }Arbre;
-
+/*
+ * finalp : pointeur de fin d'arbre qui sert juste à faire une insertion en temps constant à l'initialisation
+ */
 typedef struct strDico{
     struct strArbre* beginp;
     struct strArbre* finalp;
 }Dico;
 
-Arbre* creationFeuille();
+Code* creationCodeInit(unsigned char* car,int taille);
+
+//Arbre* creationFeuille();
 
 int initialiser();
+
+int ajouterElement (Code prefix,unsigned char* mono);
 
 int afficherArbre();
 #endif	/* ARBRE_H */

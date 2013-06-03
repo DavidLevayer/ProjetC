@@ -5,6 +5,9 @@
 
 
 static Dico d;
+/*
+ * @param : cpt permet d'avoir la valeur du code sans se poser de questions sur l'ordre d'insertion
+ */
 static int cpt;
 
 
@@ -49,7 +52,7 @@ Arbre* creationFeuille(){
  * va permettre d'inserer à gauche un noeud pour l'initialisation
  */
 
-int insertionGauche(Code prefix){
+int insertionGaucheInit(Code prefix){
     Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
     cpt++;
     nouvelElement->val=cpt;
@@ -64,9 +67,22 @@ int insertionGauche(Code prefix){
     return 0;
 }
 
+Arbre* insertionGauche(Code prefix){
+    Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
+    cpt++;
+    nouvelElement->val=cpt;
+    nouvelElement->mot = malloc(sizeof(Code*));
+    nouvelElement->mot->taille = prefix.taille;
+    nouvelElement->mot->valeur = prefix.valeur;
+    nouvelElement->filsd = (Arbre*)malloc(sizeof(Arbre));
+    nouvelElement->filsd = creationFeuille();
+    nouvelElement->filsg =NULL;
+    return nouvelElement;
+}
+
 int initialiser(){
     int i=1;
-    unsigned char* cheat =malloc(sizeof(char));
+    unsigned char* cheat =malloc(sizeof(unsigned char));
     Code* code = malloc(sizeof(Code*));
     
     // creation de la premiere cellule pour amorcer l'initialisation
@@ -85,7 +101,7 @@ int initialiser(){
     while(i<256){
         *cheat = i;
         code = creationCodeInit(cheat,1);
-        insertionGauche(*code);
+        insertionGaucheInit(*code);
         i++;
     }
 
@@ -94,7 +110,7 @@ int initialiser(){
 
     while(i<266){
         code = creationCodeInit(NULL,0);
-        insertionGauche(*code);
+        insertionGaucheInit(*code);
         i++;
     }
     
@@ -102,6 +118,53 @@ int initialiser(){
     free(code);
     return 1;
 }
+
+Code fusion (Code prefix,unsigned char* mono){
+    int i=0;
+    Code newCode;
+    if(mono==NULL)
+        return prefix;
+    newCode.taille=prefix.taille+1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
+    while(i<prefix.taille){
+        *(newCode.valeur+i)=*(prefix.valeur+i);
+        i++;
+    }
+    *(newCode.valeur+i)=*mono;
+    return newCode;
+}
+int ajouterElement (Code prefix,unsigned char* mono){
+    int i=0;
+    Code c = fusion(prefix,mono);
+    Code* cheat = (Code*)malloc(sizeof(Code));
+    Arbre* tmp = (Arbre*)malloc(sizeof(Arbre));
+    tmp = d.beginp;
+    while((tmp!=NULL)&& (i<c.taille)){
+        if(*(c.valeur+i)>(*tmp->mot->valeur))
+            tmp=tmp->filsg;
+        else{
+            tmp=tmp->filsd;
+            if(tmp->filsg==NULL){
+                if(i<c.taille){
+                    cheat = creationCodeInit(c.valeur+i,1);
+                    tmp->filsg= insertionGauche(*cheat);
+                    tmp = tmp->filsg;
+                    i++;
+                }
+            }
+            else{
+                i++;
+                tmp=tmp->filsg;
+            }
+        }
+    }
+    free(cheat);
+    free(tmp);
+    return 0;
+}
+
+
+
 
 int afficherChaine(unsigned char* chaine,int taille){
     int i=0;
