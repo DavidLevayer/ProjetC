@@ -35,27 +35,6 @@ int fermer (FILE* fichier)
 }
 
 
-int tailleFichier(FILE* f, long* taille)
-{
-	{
-    /* Cette fonction retourne 0 en cas de succes, une valeur differente dans le cas contraire. */
-    /* La taille du fichier, si elle a pu etre calculee, est retournee dans *taille                */
-
-    int ret = 0;  
-
-    if (f != NULL)
-    {
-        fseek(f, 0, SEEK_END); /* aller a la fin du fichier */
-        *taille = ftell(f); /* lire l'offset de la position courante par rapport au debut du fichier */
- 				rewind(f);
-    }
-    else
-        ret = 1;
- 
-    return ret;
-	}
-}
-
 static int reste = 0;
 static int nbReste = 0;
 static int nbBits = 9;
@@ -65,18 +44,14 @@ int ecrire(FILE* f, int v)
 	int buffer = v;
 	char aEcrire;
 
-	int restePrecedent,ajoutCourant;
-	int codeSpecial=0;
+	unsigned int restePrecedent,ajoutCourant;
+	unsigned int codeSpecial=0;
 	
-	if ((v & creerMasque(9))-(FIN & creerMasque(9)) == 0)
-		codeSpecial = 1;
-	if ((v & creerMasque(9))-(INC & creerMasque(9)) == 0)
-		codeSpecial = 2;
-	if ((v & creerMasque(9))-(RAZ & creerMasque(9)) == 0)
-		codeSpecial = 3;	
-
+		
+	printf("NBRESTE %d ",nbReste);
 	// On extrait les bits de poids faibles necessaires
 	buffer = buffer & creerMasque(nbBits);
+
 	// On constitue ensuite l'octet à écrire, en fonction :
 	// 	 - d'un eventuel reste précédent
 	//   - des bits de poids forts extraits ci-dessus
@@ -88,17 +63,17 @@ int ecrire(FILE* f, int v)
 	nbReste = (nbReste + nbBits - 8);
 	reste = buffer & creerMasque(nbReste);
 
-	/*
-	printf("DEBUG ######\n");
-	printf("nbBits : %d\n",nbBits);
-	printf("Buffer : %d (hexa : %x (v: %x))\n",buffer,buffer,v);
-	printf("restePrecedent : %c (hexa : %x)\n",restePrecedent,restePrecedent);
-	printf("ajoutCourant : %c (hexa : %x)\n",ajoutCourant,ajoutCourant);
-	printf("aEcrire : %c (hexa : %x)\n",aEcrire,aEcrire);
-	printf("Reste : %d (hexa : %x)\n",reste,reste);
-	printf("nbReste : %d\n",nbReste);
-	printf("############\n");
-	*/
+	
+	printf("DEBUG ###### ");
+	printf("nbBits : %d ",nbBits);
+	printf("Buffer : (hexa : %x (v: %x)) ",buffer,v);
+	printf("restePrecedent :  (hexa : %x de taille %d) ",restePrecedent,nbReste);
+	printf("ajoutCourant :  (hexa : %x) ",ajoutCourant);
+	printf("aEcrire :  (hexa : %x) ",aEcrire);
+	printf("Reste :  (hexa : %x) ",reste);
+	printf("nbReste : %d ",nbReste);
+	printf("############ ");
+	
 
 	fwrite(&aEcrire,1,1,f);
 
@@ -112,41 +87,28 @@ int ecrire(FILE* f, int v)
 		nbReste = nbReste - 8;
 	}
 
-	switch(codeSpecial)
+	if (v==FIN)
 	{
-		case 0:
-			break;
-
-		case 1:
-			// Cas de fin de fichier
 			while(nbReste < 8)
 			{
+				printf("CACCCAAAAAAAAAAAAAAAA %d %d &&&&&&&&",v,FIN);
 				reste = reste << 1;
 				nbReste++;
 			}
 			reste = reste & 0xFF;
-			//fwrite(&reste,1,1,f);
-			break;
 
-		case 2:
-			// Cas Incrémentation de la taille des éléments
-			nbBits++;
-			break;
-
-		case 3:	
-			// Cas de remise à zéro du dictionnaire
-			nbBits = 9;
-			break;
+			fwrite(&reste,1,1,f);
 	}
+	printf("=== NB RESTE %d ===",nbReste);
 	return 0;
 
 }
 
 int lire (FILE* f, int* value)
 {
-	unsigned int v,buffer;	
-	unsigned int aLire,restePrecedent,ajoutCourant;
-	//printf("DEBUG LIRE ######################\n");
+	unsigned int buffer;	
+	unsigned int aLire;
+	
 	while(nbReste<nbBits)
 	{
 		fread(&buffer,1,1,f);
@@ -169,7 +131,6 @@ int lire (FILE* f, int* value)
 	/*
 	printf("Valeur du nouveau reste : %d (hexa: %x)\n",reste,reste);
 	printf("Valeur de nouveau nbReste : %d\n",nbReste);
-	printf("#################################\n");
 	*/
 
 	return 0;
@@ -190,11 +151,18 @@ int creerMasque (int nbUn)
 int setNbBits (int valeur)
 {
 	nbBits = valeur;
+	//printf("Nouvelle valeur de nbBits : %d\n",nbBits);
 	return 0;
 }
 
 int incNbBits ()
 {
 	nbBits++;
+	//printf("Nouvelle valeur de nbBits : %d\n",nbBits);
 	return 0;
+}
+
+int getNbBits ()
+{
+	return nbBits;
 }

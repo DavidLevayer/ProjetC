@@ -18,9 +18,17 @@ int main(int argc, char **argv)
     FILE* fo;
 
     if (argc==1) {
-      fi = ouvrir("test.txt",0);
-      fo = ouvrir("res.txt",1);
+      fi = ouvrir("main",0);
+      fo = ouvrir("mainCompr",1);
       compresser(fi,fo);
+			fclose(fi);
+			fclose(fo);
+			FILE* fo2;
+			fo = ouvrir("mainCompr",0);
+			fo2 = ouvrir("mainDecompr",1);
+			decompresser(fo,fo2);
+			fclose(fo);
+			fclose(fo2);
       return 0;
     }
     else if (argc==2 && strcmp("-h",argv[1])==0) {
@@ -51,9 +59,9 @@ else
     }
 
     if (oper!=0 && entree==1)
-        fi = ouvrir(fichierEntree,0);
+    {    fi = ouvrir(fichierEntree,0); printf("Input : %s\n",fichierEntree); }
     else if (oper!=0)
-        fi = stdin;
+    {    fi = stdin; printf("Input : stdin\n"); }
     else
     {
         printf("PAS D'OPERATION A EFFECTUER\n");
@@ -61,17 +69,17 @@ else
     }
    
     if (sortie!=0)
-        fo = ouvrir(fichierSortie,1);
+    {    fo = ouvrir(fichierSortie,1); printf("Output : %s\n",fichierSortie);}
     else
-        fo = stdout;
+    {    fo = stdout; printf("Output : stdout\n"); }
 
 
 
 
 	if (oper==1)
-		compresser(fi,fo);
+		{printf("Compression...\n");compresser(fi,fo);}
 	else if (oper==2)
-		decompresser(fi,fo);
+		{printf("Decompression...\n");decompresser(fi,fo);}
    
     if (entree==1)
         fermer(fi);

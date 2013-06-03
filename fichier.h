@@ -48,3 +48,4 @@ int lire (FILE* f, int* value);
 
 int setNbBits(int valeur);
 int incNbBits();
+int getNbBits ();
