@@ -215,7 +215,7 @@ unsigned char *codeVersChaine (int code, int* longueur){
         pointeur= pointeur->nextp;
     }
     if(pointeur==NULL){
-        *longueur = 0;
+        *longueur = -1;
         return NULL;
     }
         
