@@ -42,25 +42,28 @@ int ajouterElement(unsigned char* car,int taille){
     Arbre* tmp = d.beginp;
     Arbre* tmpPrecedent;
     Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
-    nouvelElem->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
+    nouvelElem->mot = (Code*)malloc(sizeof(Code));
+    nouvelElem->mot->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
     nouvelElem->filsd = NULL;
     nouvelElem->filsg = NULL;
+    cpt++;
+    nouvelElem->val = cpt;
     if(tmp == NULL){
-        *nouvelElem->valeur=*car;
+        *nouvelElem->mot->valeur=*car;
         d.beginp=nouvelElem;
         return 0;
     }
     while((tmp!=NULL)&&(i<taille)){
         tmpPrecedent=tmp;
-        if(*(car+i)>*(tmp->valeur)){
+        if(*(car+i)>*(tmp->mot->valeur)){
             tmp = tmp->filsg;
             if(tmp==NULL){
-                *nouvelElem->valeur = *(car+i);
+                *nouvelElem->mot->valeur = *(car+i);
                 tmpPrecedent->filsg = nouvelElem;
             }
             else{
-                if(*(car+i)<*tmp->valeur){
-                    *nouvelElem->valeur = *(car+i);
+                if(*(car+i)<*tmp->mot->valeur){
+                    *nouvelElem->mot->valeur = *(car+i);
                     nouvelElem->filsg = tmp;
                     tmpPrecedent->filsg = nouvelElem;
                     i++;
@@ -71,12 +74,12 @@ int ajouterElement(unsigned char* car,int taille){
             tmp = tmp->filsd;
             i++;
             if(tmp==NULL){
-                *nouvelElem->valeur = *(car+i);
+                *nouvelElem->mot->valeur = *(car+i);
                 tmpPrecedent->filsd = nouvelElem;
             }
             else{
-                if(*(car+i)<*tmp->valeur){
-                    *nouvelElem->valeur = *(car+i);
+                if(*(car+i)<*tmp->mot->valeur){
+                    *nouvelElem->mot->valeur = *(car+i);
                     nouvelElem->filsg = tmp;
                     tmpPrecedent->filsd = nouvelElem;
                     i++;
@@ -88,60 +91,24 @@ int ajouterElement(unsigned char* car,int taille){
 }
 
 int initialiser(){
+    cpt=-1;
     ajouterElement("a",1);
+    ajouterElement("b",1);
     //ajouterElement("b",1);
+    ajouterElement("ac",2);
     ajouterElement("ab",2);
     return 0;
 }
-/*
-int ajouterElement( int cle){
-    Arbre* tmp = d.beginp;
-    Arbre* tmpPrecedent;
-    Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
-    nouvelElem->val = cle;
-    nouvelElem->filsd = NULL;
-    nouvelElem->filsg = NULL;
-    if(tmp==NULL){
-        d.beginp=nouvelElem;
-        return 0;
-    }
-    while(tmp!=NULL){
-        tmpPrecedent=tmp;
-        if(cle>tmp->val){
-            tmp=tmp->filsg;
-            if(tmp==NULL)
-                tmpPrecedent->filsg=nouvelElem;
-        }
-        else{
-            tmp=tmp->filsd;
-            if(tmp==NULL)
-                tmpPrecedent->filsd=nouvelElem;
-        }
-    }
-    return 1;
-}
-*/
-
-/*
-int initialiser(){
-    int i =0;
-    while(i<42){
-        ajouterElement(i);
-        i++;
-    }
-    return 0;
-}
-
-*/
 
 int afficherArbre(){
     Arbre* tmp1 = d.beginp;
     Arbre* tmp2 = d.beginp;
     while(tmp1!=NULL){
-        printf("%c\n",*tmp1->valeur);
+        printf("%c %d\n",*tmp1->mot->valeur,tmp1->val);
         tmp1=tmp1->filsg;
     }
-    printf("%c%c",*tmp2->valeur,*tmp2->filsd->valeur);
+    printf("%c%c %d\n",*tmp2->mot->valeur,*tmp2->filsd->mot->valeur, tmp2->filsd->val);
+    printf("%c%c %d",*tmp2->mot->valeur,*tmp2->filsd->filsg->mot->valeur, tmp2->filsd->filsg->val);
     return 0;
 }
 
@@ -149,21 +116,6 @@ int afficherArbre(){
 
 
 
-
-
-
-
-
-
-/*Arbre* creationFeuille(){
-    Arbre* feuille = (Arbre*)malloc(sizeof(Arbre));
-    feuille->filsd=NULL;
-    feuille->filsg=NULL;
-    feuille->val = -1;
-    feuille->mot = malloc(sizeof(Code));
-    feuille->mot = creationCodeInit(NULL,0);
-    return feuille;
-}*/
 
 /*
  * va permettre d'inserer à gauche un noeud pour l'initialisation
@@ -289,45 +241,4 @@ int ajouterElement (Code prefix,unsigned char* mono){
 }
 
 
-
-
-int afficherChaine(unsigned char* chaine,int taille){
-    int i=0;
-    while(i<taille){
-        printf("%c",*(chaine+i));
-        i++;
-    }
-    return 1;
-}
-
-int afficherArbre(){
-    Arbre* tmp = d.beginp;
-    while(tmp!=NULL){
-        printf("%d ",tmp->val);
-        afficherChaine(tmp->mot->valeur,tmp->mot->taille);;
-        printf("\n");
-        tmp = tmp->filsg;
-    }
-    return 1;
-}
-
-int afficherFuck(Code prefix){
-    int i =0;
-    Arbre* tmp = (Arbre*)malloc(sizeof(Arbre));
-    tmp = d.beginp;
-    while((tmp!=NULL)&&(i<prefix.taille)){
-        if(*(prefix.valeur+i)>(*tmp->mot->valeur)){
-            printf("%c",*tmp->mot->valeur);
-            tmp=tmp->filsg;
-        }
-        else{
-            printf("%c\n",*tmp->mot->valeur);
-            //tmp=tmp->filsd;
-            if(tmp==NULL)
-                printf("pointeur null\n");
-            printf("caca");
-            i++;
-        }
-    }
-}
  */

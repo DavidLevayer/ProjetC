@@ -29,6 +29,7 @@ typedef struct strCode {
 typedef struct strArbre{
     struct strCode* mot;
     int val;
+    //unsigned char *valeur;
     struct strArbre* filsg;
     struct strArbre* filsd;
 }Arbre;
@@ -40,16 +41,9 @@ typedef struct strDico{
     struct strArbre* finalp;
 }Dico;
 
-Code* creationCodeInit(unsigned char* car,int taille);
-
-//Arbre* creationFeuille();
 
 int initialiser();
 
-int ajouterElement (Code prefix,unsigned char* mono);
-
 int afficherArbre();
-
-int afficherFuck(Code prefix);
 #endif	/* ARBRE_H */
 
