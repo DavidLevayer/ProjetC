@@ -130,7 +130,7 @@ Code fusion (Code prefix, char* mono){
     Code newCode;
     if(mono==NULL)
         return prefix;
-    newCode.taille=prefix.taille+1;
+    newCode.taille=prefix.taille + 1;
     newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
     while(i<prefix.taille){
         *(newCode.valeur+i)=*(prefix.valeur+i);
@@ -194,8 +194,12 @@ int rechercher(Code prefix, char* mono, int *code){
         pointeur=pointeur->nextp;
     }
     if(pointeur==NULL)
-        return 0;
-    else{
+    {
+      *code = 0;
+      return 0;
+    }
+    else
+    {
         *code = pointeur->val;
         return 1;
     }
@@ -215,7 +219,7 @@ unsigned char *codeVersChaine (int code, int* longueur){
         pointeur= pointeur->nextp;
     }
     if(pointeur==NULL){
-        *longueur = -1;
+        *longueur = 0;
         return NULL;
     }
         
@@ -256,6 +260,4 @@ int supprimerDico()
 	d.beginp=d.finalp=d.middlep=NULL;
 	return 1;
 }
-
-
 
