@@ -37,6 +37,123 @@ Code* creationCodeInit(unsigned char* car,int taille){
     }
     
 }
+int ajouterElement(unsigned char* car,int taille){
+    int i =0;
+    Arbre* tmp = d.beginp;
+    Arbre* tmpPrecedent;
+    Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
+    nouvelElem->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
+    nouvelElem->filsd = NULL;
+    nouvelElem->filsg = NULL;
+    if(tmp == NULL){
+        *nouvelElem->valeur=*car;
+        d.beginp=nouvelElem;
+        return 0;
+    }
+    while((tmp!=NULL)&&(i<taille)){
+        tmpPrecedent=tmp;
+        if(*(car+i)>*(tmp->valeur)){
+            tmp = tmp->filsg;
+            if(tmp==NULL){
+                *nouvelElem->valeur = *(car+i);
+                tmpPrecedent->filsg = nouvelElem;
+            }
+            else{
+                if(*(car+i)<*tmp->valeur){
+                    *nouvelElem->valeur = *(car+i);
+                    nouvelElem->filsg = tmp;
+                    tmpPrecedent->filsg = nouvelElem;
+                    i++;
+                }
+            }
+        }
+        else{
+            tmp = tmp->filsd;
+            i++;
+            if(tmp==NULL){
+                *nouvelElem->valeur = *(car+i);
+                tmpPrecedent->filsd = nouvelElem;
+            }
+            else{
+                if(*(car+i)<*tmp->valeur){
+                    *nouvelElem->valeur = *(car+i);
+                    nouvelElem->filsg = tmp;
+                    tmpPrecedent->filsd = nouvelElem;
+                    i++;
+                }
+            }
+        }
+    }
+    return 1;
+}
+
+int initialiser(){
+    ajouterElement("a",1);
+    //ajouterElement("b",1);
+    ajouterElement("ab",2);
+    return 0;
+}
+/*
+int ajouterElement( int cle){
+    Arbre* tmp = d.beginp;
+    Arbre* tmpPrecedent;
+    Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
+    nouvelElem->val = cle;
+    nouvelElem->filsd = NULL;
+    nouvelElem->filsg = NULL;
+    if(tmp==NULL){
+        d.beginp=nouvelElem;
+        return 0;
+    }
+    while(tmp!=NULL){
+        tmpPrecedent=tmp;
+        if(cle>tmp->val){
+            tmp=tmp->filsg;
+            if(tmp==NULL)
+                tmpPrecedent->filsg=nouvelElem;
+        }
+        else{
+            tmp=tmp->filsd;
+            if(tmp==NULL)
+                tmpPrecedent->filsd=nouvelElem;
+        }
+    }
+    return 1;
+}
+*/
+
+/*
+int initialiser(){
+    int i =0;
+    while(i<42){
+        ajouterElement(i);
+        i++;
+    }
+    return 0;
+}
+
+*/
+
+int afficherArbre(){
+    Arbre* tmp1 = d.beginp;
+    Arbre* tmp2 = d.beginp;
+    while(tmp1!=NULL){
+        printf("%c\n",*tmp1->valeur);
+        tmp1=tmp1->filsg;
+    }
+    printf("%c%c",*tmp2->valeur,*tmp2->filsd->valeur);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
 
 /*Arbre* creationFeuille(){
     Arbre* feuille = (Arbre*)malloc(sizeof(Arbre));
@@ -51,7 +168,7 @@ Code* creationCodeInit(unsigned char* car,int taille){
 /*
  * va permettre d'inserer à gauche un noeud pour l'initialisation
  */
-
+/*
 int insertionGaucheInit(Code prefix){
     Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
     cpt++;
@@ -213,3 +330,4 @@ int afficherFuck(Code prefix){
         }
     }
 }
+ */
