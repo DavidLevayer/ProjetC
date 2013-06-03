@@ -194,7 +194,10 @@ int rechercher(Code prefix, char* mono, int *code){
         pointeur=pointeur->nextp;
     }
     if(pointeur==NULL)
-        return 0;
+    {
+      *code = 0;
+      return 0;
+    }
     else{
         *code = pointeur->val;
         return 1;
