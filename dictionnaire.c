@@ -41,7 +41,7 @@ int ajouterElement (Code prefix, char* mono){
     Code c = fusion(prefix,mono);
     List* nouvelElement = malloc(sizeof(List*));
     nouvelElement->val = d.finalp->val+1;
-    nouvelElement->mot = malloc(c.taille*sizeof(unsigned char));
+    nouvelElement->mot = malloc(sizeof(Code*));
     nouvelElement->mot->valeur = c.valeur;
     nouvelElement->mot->taille =c.taille;
     nouvelElement->nextp = NULL;

@@ -41,5 +41,7 @@ typedef struct strDico{
 Arbre* creationFeuille();
 
 int initialiser();
+
+int afficherArbre();
 #endif	/* ARBRE_H */
 
