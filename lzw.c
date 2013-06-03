@@ -31,7 +31,6 @@ int compresser (FILE *fi, FILE *fo)
 	w.taille = 1;
 	while ((a = fgetc(fi)) != EOF)
 	{
-
 		if (rechercher(w,&a,&code))
 		{
 			w = fusion (w,&a); // w <--- w + a (avec taille++ inclu)
@@ -42,22 +41,23 @@ int compresser (FILE *fi, FILE *fo)
 			rechercher(w,NULL,&code);
 			//fprintf(fo,"%d.",code);
 			ecrire(fo,code);
-
+			//printf("c = %c | h = %x | d = %d\n",code,code, code);
+		
 			placesDisponibles--;
 			if (placesDisponibles==0) incNbBits();
 
 			ajouterElement(w,&a);
+			
 			*w.valeur = a;
 			w.taille = 1;
 		}
-		
 	}
-	rechercher(w,NULL,&code);
-	//fprintf(fo,"%d",code);
-	ecrire(fo,code);
-	
 	// Fin de fichier
 	ecrire(fo,FIN);
+	//printf("c = %c | h = %x | d =  %d\n",FIN,FIN,FIN);
+
+
+	afficherListe();
 	return 0;
 }
 
@@ -87,22 +87,30 @@ int decompresser(FILE* fi, FILE* fo)
 	w.taille = lg;
 	//printf("w : %s (taille: %d)\n",w.valeur,w.taille);
 	fwrite(w.valeur,1,1,fo);
+
+	
 	
 	while (1)
 	{
-		
 		lire(fi,&i2);
-
-		if(i2==FIN) break;
+		
 		if(i2==INC) 
 		{
 			incNbBits();
+			//printf("PLUS");
 			continue;
+			
 		}
-		if(i2==RAZ) 
+		else if(i2==RAZ) 
 		{
 			setNbBits(9);
 			continue;
+			
+		}
+		else if(i2==FIN) 
+		{
+			//printf("FIN");
+			break;
 		}
 
 		//printf("\nValeur de i' : %d (hexa: %x)\n",i2,i2);
@@ -133,15 +141,16 @@ int decompresser(FILE* fi, FILE* fo)
 		//printf("w : %s (taille: %d)\n",w.valeur,w.taille);
 
 		fwrite(w2.valeur,w2.taille,1,fo);
-
+		
 		a = w2.valeur[0];
 		//printf("Valeur de a : %c\n",a);
 		//printf("Element ajouté au dico : %s%c\n",w.valeur,a);
 		ajouterElement(w,&a);
 		i = i2;
 		lg = lg2;
-		
+
 		
 	}
+	afficherListe();
 	return 0;
 }

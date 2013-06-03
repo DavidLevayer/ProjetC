@@ -130,8 +130,8 @@ Code fusion (Code prefix, char* mono){
     Code newCode;
     if(mono==NULL)
         return prefix;
-    newCode.taille=prefix.taille+1;
-    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
+    newCode.taille=prefix.taille + 1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
     while(i<prefix.taille){
         *(newCode.valeur+i)=*(prefix.valeur+i);
         i++;
@@ -198,7 +198,8 @@ int rechercher(Code prefix, char* mono, int *code){
       *code = 0;
       return 0;
     }
-    else{
+    else
+    {
         *code = pointeur->val;
         return 1;
     }

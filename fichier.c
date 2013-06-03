@@ -125,7 +125,7 @@ int ecrire(FILE* f, int v)
 				nbReste++;
 			}
 			reste = reste & 0xFF;
-			fwrite(&reste,1,1,f);
+			//fwrite(&reste,1,1,f);
 			break;
 
 		case 2:
