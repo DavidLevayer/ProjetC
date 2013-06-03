@@ -131,7 +131,7 @@ Code fusion (Code prefix, char* mono){
     if(mono==NULL)
         return prefix;
     newCode.taille=prefix.taille+1;
-    newCode.valeur=malloc(newCode.taille*sizeof(unsigned int));
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
     while(i<prefix.taille){
         *(newCode.valeur+i)=*(prefix.valeur+i);
         i++;
