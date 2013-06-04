@@ -87,6 +87,7 @@ int compresser (FILE *fi, FILE *fo)
 	// Statistiques
 	printf("Nombre d'octets traités : %d\n",nbOctetsCompresses);
 	printf("Taille du ficher de sortie : %d (%d octets)\n",nbBitsCourant,nbBitsCourant/8);
+	printf("Taux de compression : %d %%\n",(nbBitsCourant/8)*100/nbOctetsCompresses);
 	supprimerDico();	
 	return 0;
 }
@@ -105,8 +106,6 @@ int decompresser(FILE* fi, FILE* fo)
 	Code w,w2;
 	unsigned char *buffer;
 
-	int nbOctetsExtraits = 0;
-
 	// Initialisation du dictionnaire
 	initialiser();
 	
@@ -121,7 +120,6 @@ int decompresser(FILE* fi, FILE* fo)
 	while (1)
 	{
 		lire(fi,&i2); 
-		nbOctetsExtraits++;
 
 		if(i2==FIN) 
 			break;
@@ -176,7 +174,6 @@ int decompresser(FILE* fi, FILE* fo)
 		
 	}
 
-	printf("Nombre d'octets traités : %d\n",nbOctetsExtraits);
 	supprimerDico();
 	return 0;
 }
