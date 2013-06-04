@@ -20,7 +20,7 @@
 #define RAZ 0x102
 #define NB_BIT_INIT 9
 #define RESERVE 10
-#define TAILLE_BIT_MAX 20
+#define TAILLE_BIT_MAX 15
 
 /*
  * valeur : chaine de caractere en non signé --->permet d'avoir les 255 caractères ascii

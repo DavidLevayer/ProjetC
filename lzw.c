@@ -18,23 +18,21 @@ int compresser (FILE *fi, FILE *fo)
 	Code w;
 	int a;
 	int code;
-	int nbBitsCourant = 0;
+	int nbBitsCourant = 1;
 	int nbOctetsCompresses = 0;
-	int tailleFichierSortie = 0;
 
 	// Initialisation du dictionnaire
 	initialiser();
 
 	// Initialisation des places disponibles dans le dictionnaire (pour un nombre de bits donné)
-	int placesDisponibles = (1<<NB_BIT_INIT) - 256 - RESERVE; // 2^9 - 2^8 (mono-octets) - 10 (reservé)
-
+	int placesDisponibles = (1<<NB_BIT_INIT) - 256 - RESERVE; // 2^9 - 2^8 (mono-octets) - 10 (reservé)	
+	
 	w.valeur = malloc (sizeof(char));
 	w.valeur[0] = fgetc(fi);
 	w.taille = 1;
 	while ((a = fgetc(fi)) != EOF)
 	{
 		nbOctetsCompresses++;
-		tailleFichierSortie+=getNbBits();
 
 		if (rechercher(w,(char*)&a,&code))
 			w = fusion (w,(char*)&a); // w <--- w + a (avec taille++ inclu)
@@ -62,6 +60,7 @@ int compresser (FILE *fi, FILE *fo)
 				else
 				{
 					placesDisponibles = (1<<NB_BIT_INIT) - 256 - RESERVE;
+					nbBitsCourant+=getNbBits();
 					ecrire(fo,RAZ);
 					setNbBits(NB_BIT_INIT);
 					reinitialiser();
@@ -87,7 +86,7 @@ int compresser (FILE *fi, FILE *fo)
 
 	// Statistiques
 	printf("Nombre d'octets traités : %d\n",nbOctetsCompresses);
-	printf("Taille du ficher de sortie : %d (%d octets)\n",tailleFichierSortie,tailleFichierSortie/8);
+	printf("Taille du ficher de sortie : %d (%d octets)\n",nbBitsCourant,nbBitsCourant/8);
 	supprimerDico();	
 	return 0;
 }

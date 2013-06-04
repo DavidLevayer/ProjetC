@@ -43,9 +43,9 @@ int fermer (FILE* fichier)
 }
 
 
-static int reste = 0; // représente les bits restants (à ajouter au prochain code...)
-static int nbReste = 0; // taille (en bit) du reste
-static int nbBits = 9; // taille (en bit) sur laquelle est codée tout caractère (variable au cours du temps)
+static unsigned int reste = 0; // représente les bits restants (à ajouter au prochain code...)
+static unsigned int nbReste = 0; // taille (en bit) du reste
+static unsigned int nbBits = 9; // taille (en bit) sur laquelle est codée tout caractère (variable au cours du temps)
 
 /*
  * Ecrit (en binaire) l'entier v dans le fichier pointé par f
@@ -55,14 +55,14 @@ static int nbBits = 9; // taille (en bit) sur laquelle est codée tout caractèr
  */
 int ecrire(FILE* f, int v)
 {
-	int buffer = v;
+	unsigned int buffer = v;
 	char aEcrire;
 
 	unsigned int restePrecedent,ajoutCourant;
 	unsigned int codeSpecial=0;
 	
 	// On extrait les bits de poids faibles necessaires
-	buffer = buffer & creerMasque(nbBits);
+	buffer = buffer & (~0>>(sizeof(int)*8-nbBits)); //creerMasque(nbBits);
 
 	// On constitue ensuite l'octet à écrire, en fonction :
 	// 	 - d'un eventuel reste précédent
@@ -74,14 +74,14 @@ int ecrire(FILE* f, int v)
 
 	// On sauvegarde les bits restants (écriture future)
 	nbReste = (nbReste + nbBits - 8);
-	reste = buffer & creerMasque(nbReste);
+	reste = buffer & (~0>>(sizeof(int)*8-nbReste)); //creerMasque(nbReste);
 
 	fwrite(&aEcrire,1,1,f);
 
 	// On imprime le reste (octets entiers disponibles dans reste
 	while(nbReste > 7)
 	{
-		buffer = reste & creerMasque(nbReste-8);
+		buffer = reste & (~0>>(sizeof(int)*8-(nbReste-8))); //creerMasque(nbReste-8);
 		aEcrire = (reste >> (nbReste-8)) & 0xFF;
 		fwrite(&aEcrire,1,1,f);
 		reste = buffer;
@@ -130,7 +130,8 @@ int lire (FILE* f, int* value)
 	*value = aLire;
 
 	// On sauvegarde le reste pour la prochaine lecture
-	reste = reste & creerMasque(nbReste-nbBits);
+	//printf("nbReste %d nbBits %d Masque %d\n",nbReste,nbBits,(~0>>(sizeof(int)*8-(nbReste-nbBits))));
+	reste = reste &  creerMasque(nbReste-nbBits);//(~(unsigned)0>>(sizeof(int)*8-(nbReste-nbBits)));//
 	nbReste = nbReste - nbBits;
 
 	return 0;
