@@ -37,30 +37,73 @@ Code* creationCodeInit(unsigned char* car,int taille){
     }
     
 }
-int ajouterElement(unsigned char* car,int taille){
+Code fusion (Code prefix,unsigned char* mono){
+    int i=0;
+    Code newCode;
+    if(mono==NULL)
+        return prefix;
+    newCode.taille=prefix.taille+1;
+    newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
+    while(i<prefix.taille){
+        *(newCode.valeur+i)=*(prefix.valeur+i);
+        i++;
+    }
+    *(newCode.valeur+i)=*mono;
+    return newCode;
+}
+
+int* insertionGauche(Code prefix){
+    Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
+    cpt++;
+    nouvelElement->val=cpt;
+    nouvelElement->mot = malloc(sizeof(Code*));
+    nouvelElement->mot->taille = prefix.taille;
+    nouvelElement->mot->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
+    nouvelElement->mot->valeur =prefix.valeur;
+    nouvelElement->filsd = NULL;
+    nouvelElement->filsg =NULL;
+    d.finalp->filsg = nouvelElement;
+    d.finalp = d.finalp->filsg;
+    return 0;
+}
+
+
+int ajouterElement (Code prefix,unsigned char* mono){
+    cpt= cpt +1;
+    Code c = fusion(prefix,mono);
     int i =0;
+    int taille = c.taille;
+    unsigned char* car =c.valeur;
     Arbre* tmp = d.beginp;
     Arbre* tmpPrecedent;
     Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
+    
+    
     nouvelElem->mot = (Code*)malloc(sizeof(Code));
     nouvelElem->mot->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
+    nouvelElem->mot->taille = taille;
     nouvelElem->filsd = NULL;
     nouvelElem->filsg = NULL;
-    cpt++;
     nouvelElem->val = cpt;
+    
+    
     if(tmp == NULL){
         *nouvelElem->mot->valeur=*car;
         d.beginp=nouvelElem;
         return 0;
     }
+    
+    
     while((tmp!=NULL)&&(i<taille)){
         tmpPrecedent=tmp;
         if(*(car+i)>*(tmp->mot->valeur)){
             tmp = tmp->filsg;
+            
             if(tmp==NULL){
                 *nouvelElem->mot->valeur = *(car+i);
                 tmpPrecedent->filsg = nouvelElem;
             }
+            
             else{
                 if(*(car+i)<*tmp->mot->valeur){
                     *nouvelElem->mot->valeur = *(car+i);
@@ -70,6 +113,7 @@ int ajouterElement(unsigned char* car,int taille){
                 }
             }
         }
+        
         else{
             tmp = tmp->filsd;
             i++;
@@ -91,27 +135,51 @@ int ajouterElement(unsigned char* car,int taille){
 }
 
 int initialiser(){
-    cpt=-1;
-    ajouterElement("a",1);
-    ajouterElement("b",1);
-    //ajouterElement("b",1);
-    ajouterElement("ac",2);
-    ajouterElement("ab",2);
-    return 0;
+    int i=1;
+    cpt=0;
+    unsigned char* cheat =malloc(sizeof(unsigned char));
+    Code* code = (Code*)malloc(sizeof(Code));
+    d.beginp =(Arbre*)malloc(sizeof(Arbre));
+    d.finalp =(Arbre*)malloc(sizeof(Arbre));
+    *cheat =0;
+    code = creationCodeInit(cheat,1);
+    d.beginp->mot = code;
+    d.beginp->filsd=NULL;
+    d.beginp->filsg=NULL;
+    d.finalp=d.beginp;
+    
+    // creation des 254 cellules acceuillant les monos caracteres ascii
+    while(i<256){
+        *cheat = i;
+        code = creationCodeInit(cheat,1);
+        insertionGauche(*code);
+        i++;
+    }
+
+    
+    // reservation de 10 cellule pour les caractères spéciaux
+
+    while(i<266){
+        code = creationCodeInit(NULL,0);
+        insertionGauche(*code);
+        i++;
+    }
+    
+    free(cheat);
+    free(code);
+    return 1;
 }
+
 
 int afficherArbre(){
-    Arbre* tmp1 = d.beginp;
-    Arbre* tmp2 = d.beginp;
-    while(tmp1!=NULL){
-        printf("%c %d\n",*tmp1->mot->valeur,tmp1->val);
-        tmp1=tmp1->filsg;
+    Arbre* tmp = d.beginp;
+    while(tmp!=NULL){
+        printf("%d %d\n",tmp->val,tmp->mot->taille);
+        //printf("carac :%c num :%d taille :%d\n",*tmp->mot->valeur,tmp->val,tmp->mot->taille);
+        tmp=tmp->filsg;
     }
-    printf("%c%c %d\n",*tmp2->mot->valeur,*tmp2->filsd->mot->valeur, tmp2->filsd->val);
-    printf("%c%c %d",*tmp2->mot->valeur,*tmp2->filsd->filsg->mot->valeur, tmp2->filsd->filsg->val);
     return 0;
 }
-
 
 
 
@@ -147,98 +215,10 @@ Arbre* insertionGauche(Code prefix){
     return nouvelElement;
 }
 
-int initialiser(){
-    int i=1;
-    unsigned char* cheat =malloc(sizeof(unsigned char));
-    Code* code = malloc(sizeof(Code*));
-    
-    // creation de la premiere cellule pour amorcer l'initialisation
-    d.beginp =malloc(sizeof(Arbre*));
-    d.finalp =malloc(sizeof(Arbre*));
-    cpt =0;
-    d.beginp->val = cpt;
-    *cheat =0;
-    code = creationCodeInit(cheat,1);
-    d.beginp->mot = code;
-    d.beginp->filsd = NULL;
-    d.beginp->filsg =NULL;
-    d.finalp=d.beginp;
-    
-    // creation des 254 cellules acceuillant les monos caracteres ascii
-    while(i<256){
-        *cheat = i;
-        code = creationCodeInit(cheat,1);
-        insertionGaucheInit(*code);
-        i++;
-    }
 
-    
-    // reservation de 10 cellule pour les caractères spéciaux
 
-    while(i<266){
-        code = creationCodeInit(NULL,0);
-        insertionGaucheInit(*code);
-        i++;
-    }
-    
-    free(cheat);
-    free(code);
-    return 1;
-}
 
-Code fusion (Code prefix,unsigned char* mono){
-    int i=0;
-    Code newCode;
-    if(mono==NULL)
-        return prefix;
-    newCode.taille=prefix.taille+1;
-    newCode.valeur=malloc(newCode.taille*sizeof(unsigned char));
-    while(i<prefix.taille){
-        *(newCode.valeur+i)=*(prefix.valeur+i);
-        i++;
-    }
-    *(newCode.valeur+i)=*mono;
-    return newCode;
-}
-int ajouterElement (Code prefix,unsigned char* mono){
-    int i=0;
-    Code c = fusion(prefix,mono);
-    //printf("%d",c.taille);
-    Code* cheat = (Code*)malloc(sizeof(Code));
-    Arbre* tmp = (Arbre*)malloc(sizeof(Arbre));
-    tmp = d.beginp;
-    while((tmp!=NULL)&& (i<c.taille)){
-        if(*(c.valeur+i)>(*tmp->mot->valeur)){
-            printf("%c",*tmp->mot->valeur);
-            printf("%d\n",i);
-            tmp=tmp->filsg;
-        }
-        else{
-            printf("RENTRER DANS LE ELSE\n");
-            tmp=tmp->filsd;
-            i++;
-            if(tmp->filsg==NULL){
-                printf("pointeur null dans le if\n");
-                if(i<c.taille){
-                    printf("va ajouter un truc\n");
-                    cheat = creationCodeInit(c.valeur+i,1);
-                    tmp->filsg= insertionGauche(*cheat);
-                    tmp = tmp->filsg;
-                    i++;
-                }
-            }
-            else{
-                i++;
-                tmp=tmp->filsg;
-            }
-        }
-        if(tmp==NULL)
-            printf("pointeur null\n");
-    }
-    free(cheat);
-    free(tmp);
-    return 0;
-}
+
 
 
  */
