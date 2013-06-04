@@ -16,6 +16,7 @@ int main(int argc, char **argv){
     printf("%d\n", code);
     rechercher(*c2,NULL,&code);
     printf("%d\n", code);
+    codeVersChaine(266,&code);
     //afficherArbre();
     return 0;
 }

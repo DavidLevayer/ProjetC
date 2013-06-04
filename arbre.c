@@ -65,7 +65,8 @@ int* insertionGauche(Code prefix){
     nouvelElement->mot->valeur = (unsigned char*)malloc(sizeof(unsigned char*));
     nouvelElement->mot->valeur =prefix.valeur;
     nouvelElement->filsd = NULL;
-    nouvelElement->filsg =NULL;
+    nouvelElement->filsg = NULL;
+    nouvelElement->pere = d.finalp;
     d.finalp->filsg = nouvelElement;
     d.finalp = d.finalp->filsg;
     return 0;
@@ -88,6 +89,7 @@ int ajouterElement (Code prefix,unsigned char* mono){
     nouvelElem->mot->taille = taille;
     nouvelElem->filsd = NULL;
     nouvelElem->filsg = NULL;
+    nouvelElem->pere = NULL;
     nouvelElem->val = cpt;
     
     
@@ -106,6 +108,7 @@ int ajouterElement (Code prefix,unsigned char* mono){
             if(tmp==NULL){
                 *nouvelElem->mot->valeur = *(car+i);
                 tmpPrecedent->filsg = nouvelElem;
+                nouvelElem->pere = tmpPrecedent;
             }
             
             else{
@@ -113,6 +116,7 @@ int ajouterElement (Code prefix,unsigned char* mono){
                     *nouvelElem->mot->valeur = *(car+i);
                     nouvelElem->filsg = tmp;
                     tmpPrecedent->filsg = nouvelElem;
+                    nouvelElem->pere = tmpPrecedent;
                     i++;
                 }
             }
@@ -124,12 +128,14 @@ int ajouterElement (Code prefix,unsigned char* mono){
             if(tmp==NULL){
                 *nouvelElem->mot->valeur = *(car+i);
                 tmpPrecedent->filsd = nouvelElem;
+                nouvelElem->pere = tmpPrecedent;
             }
             else{
                 if(*(car+i)<*tmp->mot->valeur){
                     *nouvelElem->mot->valeur = *(car+i);
                     nouvelElem->filsg = tmp;
                     tmpPrecedent->filsd = nouvelElem;
+                    nouvelElem->pere = tmpPrecedent;
                     i++;
                 }
             }
@@ -150,6 +156,7 @@ int initialiser(){
     d.beginp->mot = code;
     d.beginp->filsd=NULL;
     d.beginp->filsg=NULL;
+    d.beginp->pere = NULL;
     d.finalp=d.beginp;
     
     // creation des 254 cellules acceuillant les monos caracteres ascii
@@ -191,9 +198,45 @@ int rechercher(Code prefix, unsigned char* mono, int *code){
     }
     if(i>= c.taille){
         *code = tmpPred->val;
-        return 0;
+        return 1;
     }
-    else return 1;
+    else return 0;
+}
+
+unsigned char *remonteArbre(Arbre* abr){
+    int i = abr->mot->taille;
+    Arbre* tmp = abr;
+    unsigned char* car = (unsigned char*)malloc(i*sizeof(unsigned char));
+    i--;
+    *(car + i) = *tmp->mot->valeur;
+    tmp=tmp->pere;
+    while((tmp!=NULL)&&(i>0)){
+        if(i>tmp->mot->taille){
+            i--;
+            *(car + i) = *tmp->mot->valeur;
+        }
+        tmp=tmp->pere;
+    }
+    return car;
+}
+
+Arbre* parcoursLargeur(int code, Arbre* pointeur){
+    Arbre * tmp = pointeur;
+    if(tmp->val == code)
+        return tmp;
+    if(tmp==NULL)
+        return tmp;
+    parcoursLargeur(code,tmp->filsg);
+    parcoursLargeur(code,tmp->filsd);
+    return tmp;
+}
+
+unsigned char *codeVersChaine (int code, int* longueur){
+    Arbre* tmp = parcoursLargeur(code,d.beginp);
+    if(tmp==NULL)
+        printf("C'EST DAUBE DU CUL");
+    else printf("%d",tmp->val);
+    return "WTF";
 }
 
 

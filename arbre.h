@@ -32,6 +32,7 @@ typedef struct strArbre{
     //unsigned char *valeur;
     struct strArbre* filsg;
     struct strArbre* filsd;
+    struct strArbre* pere;
 }Arbre;
 /*
  * finalp : pointeur de fin d'arbre qui sert juste à faire une insertion en temps constant à l'initialisation
@@ -48,6 +49,8 @@ int ajouterElement (Code prefix,unsigned char* mono);
 int initialiser();
 
 int rechercher(Code prefix, unsigned char* mono, int *code);
+
+unsigned char *codeVersChaine (int code, int* longueur);
 
 int afficherArbre();
 #endif	/* ARBRE_H */
