@@ -41,8 +41,13 @@ typedef struct strDico{
     struct strArbre* finalp;
 }Dico;
 
+Code* creationCodeInit(unsigned char* car,int taille);
+
+int ajouterElement (Code prefix,unsigned char* mono);
 
 int initialiser();
+
+int rechercher(Code prefix, unsigned char* mono, int *code);
 
 int afficherArbre();
 #endif	/* ARBRE_H */

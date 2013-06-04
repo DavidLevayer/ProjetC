@@ -52,6 +52,10 @@ Code fusion (Code prefix,unsigned char* mono){
     return newCode;
 }
 
+/*
+ * va permettre d'inserer à gauche un noeud pour l'initialisation
+ */
+
 int* insertionGauche(Code prefix){
     Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
     cpt++;
@@ -75,7 +79,7 @@ int ajouterElement (Code prefix,unsigned char* mono){
     int taille = c.taille;
     unsigned char* car =c.valeur;
     Arbre* tmp = d.beginp;
-    Arbre* tmpPrecedent;
+    Arbre* tmpPrecedent = NULL;
     Arbre* nouvelElem = (Arbre*)malloc(sizeof(Arbre));
     
     
@@ -170,6 +174,28 @@ int initialiser(){
     return 1;
 }
 
+int rechercher(Code prefix, unsigned char* mono, int *code){
+    int i = 0;
+    Code c =fusion(prefix,mono);
+    Arbre* tmpPred = NULL;
+    Arbre* tmp = d.beginp;
+    while((tmp!=NULL)&&(i<c.taille)){
+        tmpPred = tmp;
+        if(*(c.valeur+i)>*(tmp->mot->valeur)){
+            tmp=tmp->filsg;
+        }
+        else{
+            tmp=tmp->filsd;
+            i++;
+        }
+    }
+    if(i>= c.taille){
+        *code = tmpPred->val;
+        return 0;
+    }
+    else return 1;
+}
+
 
 int afficherArbre(){
     Arbre* tmp = d.beginp;
@@ -180,45 +206,3 @@ int afficherArbre(){
     }
     return 0;
 }
-
-
-
-
-
-/*
- * va permettre d'inserer à gauche un noeud pour l'initialisation
- */
-/*
-int insertionGaucheInit(Code prefix){
-    Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
-    cpt++;
-    nouvelElement->val=cpt;
-    nouvelElement->mot = malloc(sizeof(Code*));
-    nouvelElement->mot->taille = prefix.taille;
-    nouvelElement->mot->valeur = prefix.valeur;
-    nouvelElement->filsd = NULL 
-    nouvelElement->filsg =NULL;
-    d.finalp->filsg = nouvelElement;
-    d.finalp=d.finalp->filsg;
-    return 0;
-}
-
-Arbre* insertionGauche(Code prefix){
-    Arbre* nouvelElement = (Arbre*)malloc(sizeof(Arbre));
-    cpt++;
-    nouvelElement->val=cpt;
-    nouvelElement->mot = malloc(sizeof(Code*));
-    nouvelElement->mot->taille = prefix.taille;
-    nouvelElement->mot->valeur = prefix.valeur;
-    nouvelElement->filsd = NULL;
-    nouvelElement->filsg =NULL;
-    return nouvelElement;
-}
-
-
-
-
-
-
-
- */

@@ -4,10 +4,18 @@
 #include "arbre.h"
 
 int main(int argc, char **argv){
-    Code * c = (Code*) malloc(sizeof(Code));
-    c = creationCodeInit("ab",2);
+    int code = 0;
+    Code* c1 = (Code*)malloc(sizeof(Code));
+    Code* c2 = (Code*)malloc(sizeof(Code));
     initialiser();
-    ajouterElement(*c,NULL);
-    afficherFuck(*c);
+    c1 = creationCodeInit("ab",2);
+    c2 = creationCodeInit("5d",2);
+    ajouterElement(*c1,NULL);
+    ajouterElement(*c2,NULL);
+    rechercher(*c1,NULL,&code);
+    printf("%d\n", code);
+    rechercher(*c2,NULL,&code);
+    printf("%d\n", code);
+    //afficherArbre();
     return 0;
 }

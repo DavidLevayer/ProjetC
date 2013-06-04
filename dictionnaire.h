@@ -54,8 +54,6 @@ typedef struct strDico{
 }Dico;
 
 
-
-//static Dico d;
 Code* creationCodeInit(unsigned char* i,int taille);
         
 int initialiser();
@@ -67,13 +65,10 @@ int afficherListe();
 int rechercher(Code prefix, char* mono, int *code);
 int ajouterElement (Code prefix, char* mono);
 
-int ajouterElement (Code prefix, char* mono);
-
 int rechercher(Code prefix, char* mono, int *code);
 
 unsigned char *codeVersChaine (int code, int* longueur);
 
-Code sequenceVersCode (Code sequence, int longueur);
 
 Code fusion (Code prefix, char* mono);
 #endif
