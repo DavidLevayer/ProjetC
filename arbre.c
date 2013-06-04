@@ -211,7 +211,7 @@ unsigned char *remonteArbre(Arbre* abr){
     *(car + i) = *tmp->mot->valeur;
     tmp=tmp->pere;
     while((tmp!=NULL)&&(i>0)){
-        if(i>tmp->mot->taille){
+        if(i>=tmp->mot->taille){
             i--;
             *(car + i) = *tmp->mot->valeur;
         }
@@ -220,25 +220,42 @@ unsigned char *remonteArbre(Arbre* abr){
     return car;
 }
 
-Arbre* parcoursLargeur(int code, Arbre* pointeur){
-    Arbre * tmp = pointeur;
-    if(tmp->val == code)
-        return tmp;
-    if(tmp==NULL)
-        return tmp;
-    parcoursLargeur(code,tmp->filsg);
-    parcoursLargeur(code,tmp->filsd);
-    return tmp;
+Arbre* parcoursLargeur(int code, Arbre* pointeur, Arbre** save){
+    if(pointeur == NULL)
+        return NULL;
+    if(pointeur->val == code){
+        //printf("J'AI TROUVE TON POINTEUR\n");
+        *save = pointeur;
+        //printf("%d\n", (*save)->val);
+        return pointeur;
+    }
+    parcoursLargeur(code,pointeur->filsg, save);
+    parcoursLargeur(code,pointeur->filsd, save);
 }
 
 unsigned char *codeVersChaine (int code, int* longueur){
-    Arbre* tmp = parcoursLargeur(code,d.beginp);
-    if(tmp==NULL)
-        printf("C'EST DAUBE DU CUL");
-    else printf("%d",tmp->val);
-    return "WTF";
+    Arbre* test = (Arbre*) malloc(sizeof(Arbre));
+    unsigned char* car=NULL;
+    parcoursLargeur(code,d.beginp,&test);
+    *longueur = test->mot->taille;
+    //printf("%c",*test->mot->valeur);
+    printf("%c\n",*test->pere->mot->valeur);
+    printf("%d\n",test->mot->taille);
+    car = remonteArbre(test);
+    afficherChaine(car,*longueur);
+    
+    return car;
+
 }
 
+int afficherChaine(unsigned char* chaine,int taille){
+    int i=0;
+    while(i<taille){
+        printf("%c",*(chaine+i));
+        i++;
+    }
+    return 1;
+}
 
 int afficherArbre(){
     Arbre* tmp = d.beginp;
@@ -247,5 +264,11 @@ int afficherArbre(){
         //printf("carac :%c num :%d taille :%d\n",*tmp->mot->valeur,tmp->val,tmp->mot->taille);
         tmp=tmp->filsg;
     }
+    return 0;
+}
+int reinitialiser(){
+    return 0;
+}
+int supprimerDico(){
     return 0;
 }

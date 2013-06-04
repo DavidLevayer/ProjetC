@@ -53,5 +53,7 @@ int rechercher(Code prefix, unsigned char* mono, int *code);
 unsigned char *codeVersChaine (int code, int* longueur);
 
 int afficherArbre();
+int supprimerDico();
+int reinitialiser();
 #endif	/* ARBRE_H */
 

@@ -4,7 +4,7 @@
 #include "arbre.h"
 
 int main(int argc, char **argv){
-    int code = 0;
+    /*int code = 0;
     Code* c1 = (Code*)malloc(sizeof(Code));
     Code* c2 = (Code*)malloc(sizeof(Code));
     initialiser();
@@ -16,7 +16,7 @@ int main(int argc, char **argv){
     printf("%d\n", code);
     rechercher(*c2,NULL,&code);
     printf("%d\n", code);
-    codeVersChaine(266,&code);
-    //afficherArbre();
+    codeVersChaine(267,&code);
+    //afficherArbre();*/
     return 0;
 }
