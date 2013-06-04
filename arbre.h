@@ -10,11 +10,21 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+
+#define MAX_TAB 256
+#define TAILLE_TAB 10
 
 #define FIN 0x100
 #define INC 0x101
 #define RAZ 0x102
+#define NB_BIT_INIT 9
+#define RESERVE 10
+#define TAILLE_BIT_MAX 15
+
 
 /*
  * valeur : chaine de caractere en non signé --->permet d'avoir les 255 caractères ascii
@@ -29,7 +39,6 @@ typedef struct strCode {
 typedef struct strArbre{
     struct strCode* mot;
     int val;
-    //unsigned char *valeur;
     struct strArbre* filsg;
     struct strArbre* filsd;
     struct strArbre* pere;
@@ -42,18 +51,24 @@ typedef struct strDico{
     struct strArbre* finalp;
 }Dico;
 
-Code* creationCodeInit(unsigned char* car,int taille);
-
-int ajouterElement (Code prefix,unsigned char* mono);
-
+Code* creationCodeInit(unsigned char* i,int taille);
+        
 int initialiser();
+int supprimerDico();
 
-int rechercher(Code prefix, unsigned char* mono, int *code);
+int afficherChaine(unsigned char* chaine,int taille);
+
+int rechercher(Code prefix, char* mono, int *code);
+int ajouterElement (Code prefix, char* mono);
+
+int rechercher(Code prefix, char* mono, int *code);
 
 unsigned char *codeVersChaine (int code, int* longueur);
 
-int afficherArbre();
-int supprimerDico();
+Code fusion (Code prefix, char* mono);
+
 int reinitialiser();
+
+int supprimerDico();
 #endif	/* ARBRE_H */
 

@@ -37,7 +37,7 @@ Code* creationCodeInit(unsigned char* car,int taille){
     }
     
 }
-Code fusion (Code prefix,unsigned char* mono){
+Code fusion (Code prefix,char* mono){
     int i=0;
     Code newCode;
     if(mono==NULL)
@@ -73,7 +73,7 @@ int* insertionGauche(Code prefix){
 }
 
 
-int ajouterElement (Code prefix,unsigned char* mono){
+int ajouterElement (Code prefix,char* mono){
     cpt= cpt +1;
     Code c = fusion(prefix,mono);
     int i =0;
@@ -181,7 +181,7 @@ int initialiser(){
     return 1;
 }
 
-int rechercher(Code prefix, unsigned char* mono, int *code){
+int rechercher(Code prefix,char* mono, int *code){
     int i = 0;
     Code c =fusion(prefix,mono);
     Arbre* tmpPred = NULL;
@@ -239,8 +239,6 @@ unsigned char *codeVersChaine (int code, int* longueur){
     parcoursLargeur(code,d.beginp,&test);
     *longueur = test->mot->taille;
     //printf("%c",*test->mot->valeur);
-    printf("%c\n",*test->pere->mot->valeur);
-    printf("%d\n",test->mot->taille);
     car = remonteArbre(test);
     afficherChaine(car,*longueur);
     

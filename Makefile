@@ -5,16 +5,16 @@
 #
 
 CC = gcc
-OBJS = main.o arbre.o
+OBJS = main.o arbre.o fichier.o lzw.o
 EXEC = main
 FLAGS = -Wall -g -DDEBUG
 
 all: $(EXEC) 
 
-arbre.o: arbre.c lzw.h 
+lzw.o: lzw.c lzw.h fichier.h arbre.h
 	$(CC) $(FLAGS) -c $<
 
-main.o: main.c arbre.h
+main.o: main.c lzw.h fichier.h
 	$(CC) $(FLAGS) -c $<
 
 $(EXEC): $(OBJS)
